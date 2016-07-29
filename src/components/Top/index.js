@@ -9,9 +9,11 @@ export default React.createClass({
   },
   render() {
     return (
-      <div className="menu-top">
-        <a>{this.props.title}</a>
-      </div>
+      <section className="menus">
+        <div className="menu-top">
+          <a>{this.props.title}</a>
+        </div>
+      </section>
     )
   }
 })
