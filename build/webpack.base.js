@@ -35,6 +35,10 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.js$/,
+        loader: "imports?define=>false"
       }
     ]
   },
