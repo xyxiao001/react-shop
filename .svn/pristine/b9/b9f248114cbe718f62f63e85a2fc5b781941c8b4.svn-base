@@ -7,7 +7,6 @@ import './index.scss'
 import Navbar from 'components/Navbar'
 import Top from 'components/Top'
 import SlideWrap from 'components/SlideWrap'
-import Notice from 'components/Notice'
 
 export default React.createClass({
   getInitialState() {
@@ -33,12 +32,6 @@ export default React.createClass({
           id: 5,
           src: 'http://yanxuan.nosdn.127.net/51bfd8a82909b3a6225ccf7cb2b1325a.jpg?imageView&quality=85&thumbnail=750x400'
         }
-      ],
-      notices: [
-        '恭喜用户001成功兑换iphone6s',
-        '恭喜用户002成功兑换ipad Air2',
-        '恭喜用户003成功兑换ipad Air2',
-        '恭喜用户004成功兑换小米5'
       ]
     }
   },
@@ -47,7 +40,9 @@ export default React.createClass({
       <div className="wrap">
         <Top title="精选" />
         <SlideWrap slides={this.state.slideList} />
-        <Notice notices={this.state.notices} />
+        <div className="horn">
+          喇叭
+        </div>
         <Navbar />
       </div>
     )
