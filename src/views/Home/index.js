@@ -59,34 +59,24 @@ export default React.createClass({
           src: 'http://yanxuan.nosdn.127.net/4fb112a597732ea093df1d495587b04e.png?imageView&quality=85&thumbnail=330x330',
           name: '速干防滑沐浴拖鞋',
           num: '250积分'
-        },
-        {
-          id: 104,
-          src: 'http://yanxuan.nosdn.127.net/f99b3e5bbd6fbf86bad98cfe3ad9c2d9.png?imageView&quality=85&thumbnail=330x330',
-          name: 'Classic欧式压铸炒锅30cm',
-          num: '3400积分'
         }
       ]
     }
   },
   render() {
+    var hots = []
+    this.state.hots.forEach((hot) => {
+      hots.push(
+        <Commodity key={hot.id} item={hot} />
+      )
+    })
     return (
       <div className="wrap">
         <Top title="精选" />
         <SlideWrap slides={this.state.slideList} />
         <Notice notices={this.state.notices} />
         <div className="commodity-list">
-          <div className="row">
-            <div className="col-xs-4">
-              <Commodity />
-            </div>
-            <div className="col-xs-4">
-              <Commodity />
-            </div>
-            <div className="col-xs-4">
-              <Commodity />
-            </div>
-          </div>
+          {hots}
         </div>
         <Navbar />
       </div>
