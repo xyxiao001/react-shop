@@ -1,7 +1,7 @@
 section.slide {
     position: relative;
     width: 100%;
-    height: 220px;
+    height: 200px;
     overflow: hidden;
 
     div.slideWarp {
@@ -9,7 +9,7 @@ section.slide {
       padding: 0;
       margin: 0;
       left: 0;
-      height: 220px;
+      height: 200px;
       overflow: hidden;
       z-index: 98%;
       //transition: left 0.5s ease-out;
@@ -74,12 +74,12 @@ section.slide {
     }
   }
 
-  @media  screen and (min-width: 800px) {
+  @media  screen and (min-width: 600px) {
     section.slide {
-      height: 400px;
+      height: 300px;
 
       div.slideWarp {
-        height: 400px;
+        height: 300px;
       }
     }
   }

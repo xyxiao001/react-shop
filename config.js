@@ -11,8 +11,8 @@ module.exports = {
     productionSourceMap: true
   },
   dev: {
-    // host: ip.address(),
-    host: 'localhost',
+    host: ip.address(),
+    //host: 'localhost',
     port: 8082,
     proxyTable: {}
   }
