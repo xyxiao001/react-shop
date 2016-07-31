@@ -11,7 +11,7 @@ export default React.createClass({
   // dom 文档挂载后执行
   componentDidMount() {
     // 设置容器宽度
-    var slideWrap = $('.slideWarp .slide-item').length
+    const slideWrap = $('.slideWarp .slide-item').length
     var slideWidth = slideWrap * 100
     $('.slideWarp').css({width: slideWidth + '%'})
     $('.slide-item').css({width: 100 / slideWrap + '%'})
@@ -25,7 +25,7 @@ export default React.createClass({
     var slide = document.querySelector('.slideWarp')
     var self = this
     this.setSlide = setInterval(function () {
-      if (showId < 4) {
+      if (showId < slideWrap - 1) {
         showId = showId + 1
         var goLeft = -(showId * 100) + '%'
         $(slide).animate({left: goLeft})
@@ -35,7 +35,7 @@ export default React.createClass({
         $(slide).animate({left: '0px'})
         $('.show-control li').eq(0).addClass('choose').siblings().removeClass('choose')
       }
-    }, 2500)
+    }, 3500)
     $('.show-control li').click(function () {
       $(this).addClass('choose').siblings().removeClass('choose')
       showId = $(this).index()
@@ -81,7 +81,7 @@ export default React.createClass({
             goId = Math.floor(go / 100)
           }
           showId = showId + goId
-          if (showId > 4) {
+          if (showId > slideWrap - 1) {
             showId = 4
           }
         } else {
@@ -97,7 +97,7 @@ export default React.createClass({
             showId = showId > 0 ? showId : 0
           }
         }
-        showId = showId < 4 ? showId : 4
+        showId = showId < slideWrap - 1 ? showId : slideWrap - 1
         var goLeft = -(showId * 100) + '%'
         $(slide).animate({left: goLeft})
         $('.show-control li').eq(showId).addClass('choose').siblings().removeClass('choose')

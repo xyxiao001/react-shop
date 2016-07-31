@@ -1,0 +1,58 @@
+.detail {
+  position: relative;
+  width: 100%;
+  padding: 5px;
+  background-color: #e6e6e6;
+
+  .slide {
+    height: 300px;
+  }
+
+  .detail-inte {
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    height: 65px;
+    background-color: white;
+
+    p.detail-name {
+      font-weight: bold;
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.9);
+      letter-spacing: 1px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      padding-bottom: 2px;
+    }
+
+    span {
+      font-size: 13px;
+    }
+
+    span.integral {
+      font-size: 14px;
+      font-weight: bold;
+      color: #ff9933;
+    }
+
+    span.my-integral {
+      font-size: 13px;
+      color: #ff9933;
+    }
+
+    span.pull-right {
+      float: right;
+      padding-top: 2px;
+      padding-right: 20px;
+    }
+  }
+}
+
+@media  screen and (min-width: 600px) {
+  .detail {
+    .slide {
+      height: 450px;
+    }
+  }
+}
