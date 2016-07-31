@@ -9,6 +9,7 @@ import Top from 'components/Top'
 import SlideWrap from 'components/SlideWrap'
 import Notice from 'components/Notice'
 import Commodity from 'components/Commodity'
+import Mark from 'components/Mark'
 
 export default React.createClass({
   getInitialState() {
@@ -64,6 +65,7 @@ export default React.createClass({
     }
   },
   render() {
+    // 首页推荐的3个
     var hots = []
     this.state.hots.forEach((hot) => {
       hots.push(
@@ -75,6 +77,14 @@ export default React.createClass({
         <Top title="精选" />
         <SlideWrap slides={this.state.slideList} />
         <Notice notices={this.state.notices} />
+        <div className="commodity-list">
+          {hots}
+        </div>
+        <Mark name={'限时兑换'} />
+        <div className="commodity-list">
+          {hots}
+        </div>
+        <Mark name={'推荐兑换'} />
         <div className="commodity-list">
           {hots}
         </div>

@@ -1,0 +1,40 @@
+div.mark {
+  width: 100%;
+  height: 30px;
+  margin: auto;
+  background-color: transparent;
+  overflow: hidden;
+  background-color: #e6e6e6;
+
+  span {
+    display: inline-block;
+  }
+
+  span.mark-name {
+    width: 24%;
+    height: 30px;
+    padding-top: 1px;
+    font-size: 14px;
+    line-height: 28px;
+    letter-spacing: 1px;
+    background-color: black;
+    color: white;
+    text-align: center;
+  }
+
+  span.mark-left {
+    margin-left: 2%;
+    width: 36%;
+    height: 5px;
+    padding-top: -10px;
+    border-top: 1px solid #777;
+  }
+
+  span.mark-right {
+    margin-right: 2%;
+    width: 36%;
+    height: 5px;
+    padding-top: -10px;
+    border-top: 1px solid #777;
+  }
+}
