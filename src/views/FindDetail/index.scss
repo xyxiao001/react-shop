@@ -1,0 +1,37 @@
+div.find-items {
+  min-height: 700px;
+  background-color: #e6e6e6;
+
+  a.commodity-item {
+    width: 44%;
+    height: 220px;
+    margin-left: 3%;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  div.find-items {
+
+    a.commodity-item {
+      height: 320px;
+    }
+  }
+}
+
+@media screen and (min-width: 400px) {
+  div.find-items {
+
+    a.commodity-item {
+      height: 230px;
+    }
+  }
+}
+
+@media screen and (max-width: 340px) {
+  div.find-items {
+
+    a.commodity-item {
+      height: 190px;
+    }
+  }
+}
