@@ -4,6 +4,8 @@ import React from 'react'
 import Navbar from 'components/Navbar'
 import Top from 'components/Top'
 
+import './index.scss'
+
 export default React.createClass({
   render() {
     return (

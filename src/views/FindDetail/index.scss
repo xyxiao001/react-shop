@@ -9,20 +9,20 @@ div.find-items {
   }
 }
 
-@media screen and (min-width: 500px) {
-  div.find-items {
-
-    a.commodity-item {
-      height: 320px;
-    }
-  }
-}
-
 @media screen and (min-width: 400px) {
   div.find-items {
 
     a.commodity-item {
       height: 230px;
+    }
+  }
+}
+
+@media screen and (min-width: 500px) {
+  div.find-items {
+
+    a.commodity-item {
+      height: 320px;
     }
   }
 }
