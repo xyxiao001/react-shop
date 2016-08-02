@@ -64,6 +64,8 @@ export default React.createClass({
       ]
     }
   },
+  componentDidMount() {
+  },
   render() {
     // 首页推荐的3个
     var hots = []
