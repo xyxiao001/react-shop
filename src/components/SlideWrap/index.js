@@ -1,5 +1,5 @@
 import React from 'react'
-import { Carousel } from 'antd';
+import { Carousel } from 'antd'
 
 // 导入样式
 import './index.scss'
@@ -12,14 +12,14 @@ export default React.createClass({
     var rows = []
     this.props.slides.forEach((slide) => {
       rows.push(
-        <a className="slide-item" key={slide.id}>
+        <a className="slide-item" key={slide.src}>
           <img src={slide.src} alt={slide.id} />
         </a>
       )
     })
     return (
       <section className="slide">
-        <Carousel>
+        <Carousel autoplay>
           {rows}
         </Carousel>
       </section>

@@ -10,9 +10,9 @@ export default React.createClass({
   render() {
     return (
       <Link className="commodity-item" to={`/detail?${this.props.item.id}`}>
-        <img src={this.props.item.src} alt={this.props.item.name} />
-        <p className="commodity-name">{this.props.item.name}</p>
-        <p className="commodity-num">{this.props.item.num}</p>
+        <img src={this.props.item.img} alt={this.props.item.title} />
+        <p className="commodity-name">{this.props.item.title}</p>
+        <p className="commodity-num">{this.props.item.jf_price} <span>积分</span></p>
         <span className="commodity-add">
           <i className="fa fa-cart-plus" aria-hidden="true"></i>
         </span>

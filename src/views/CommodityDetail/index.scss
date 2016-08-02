@@ -6,6 +6,15 @@
 
   .slide {
     height: 300px;
+
+    img {
+      width: 100%;
+      height: 300px;
+    }
+
+    ul.slick-dots {
+      top: 260px;
+    }
   }
 
   .detail-inte {
@@ -96,6 +105,15 @@
   .detail {
     .slide {
       height: 450px;
+
+      img {
+        height: 450px;
+      }
+
+      ul.slick-dots {
+        top: 410px;
+        left: 170px;
+      }
     }
   }
 }
