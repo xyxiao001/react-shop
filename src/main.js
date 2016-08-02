@@ -8,6 +8,7 @@ import Carts from 'views/Carts'
 import Integral from 'views/Integral'
 import Detail from 'views/CommodityDetail'
 import FindDetail from 'views/FindDetail'
+import ShopDetail from 'views/ShopDetail'
 
 render((
   <Router history={browserHistory}>
@@ -17,5 +18,6 @@ render((
     <Route path='/Integral' component={Integral} />
     <Route path='/Detail' component={Detail} />
     <Route path='/FindDetail' component={FindDetail} />
+    <Route path='/ShopDetail' component={ShopDetail} />
   </Router>
 ), document.getElementById('app'))

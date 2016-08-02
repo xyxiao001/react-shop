@@ -1,0 +1,58 @@
+body{
+  background: #fff;
+}
+.user{
+  width: 100%;
+  height: 70px;
+  background: #E6E6E6;
+  padding: 10px;
+  .user-name{
+    span{
+      font-size: 20px;
+      font-weight: 900;
+    }
+    a{
+      border-radius: 5px;
+      color: #fff;
+      background: #E96B16;
+      margin: 0 10px;
+      padding: 0 10px;
+    }
+  }
+  .integral-right{
+    color:#E96B16;
+  }
+}
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+.nav{
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  background: #2D2D35;
+  color: #fff;
+  .conversion{
+    width: 50%;
+    border-right: 2px solid #666;
+  }
+  .integral{
+    width: 50%;
+  }
+}
+.conversionBox{
+  padding: 10px;
+  color: #666;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  display: none;
+  .send{
+    color: #E96B16;
+  }
+}
+.integralBox{
+  display: block;
+}
