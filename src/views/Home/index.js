@@ -77,7 +77,7 @@ export default React.createClass({
       success: function (data) {
         console.log(data)
         self.setState({
-          slideList: data.ad
+          // slideList: data.ad
         })
       },
       error: function () {
