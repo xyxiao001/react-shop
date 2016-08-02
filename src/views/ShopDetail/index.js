@@ -59,7 +59,7 @@ const User = React.createClass({
   },
   render() {
     return (
-      <div>
+      <div className='userBox'>
         <img src={this.state.src} />
         <div className='usermsg'>
           <p>收货人： <span>{this.state.name}</span></p>
