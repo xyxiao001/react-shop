@@ -25,6 +25,10 @@
   width: 100%;
   background-color: #e6e6e6;
 
+  i {
+    cursor: pointer;
+  }
+
   .ant-checkbox-wrapper {
     font-size: 16px;
     color: black;
@@ -195,4 +199,8 @@
 
 .hide {
   display: none;
+}
+
+.ant-confirm {
+  width: 90% !important;
 }

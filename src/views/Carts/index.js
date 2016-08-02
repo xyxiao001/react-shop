@@ -1,11 +1,14 @@
 import React from 'react'
-import { Checkbox, Button, Icon } from 'antd'
+import { Checkbox, Button, Icon, Modal } from 'antd'
 
 // 导入组件
 import Navbar from 'components/Navbar'
 import Top from 'components/Top'
 
 import './index.scss'
+
+// 注册弹出层
+const confirm = Modal.confirm
 
 const Item = React.createClass({
   propTypes: {
@@ -14,6 +17,13 @@ const Item = React.createClass({
     change: React.PropTypes.func
   },
   render() {
+    function showConfirm() {
+      confirm({
+        title: '你确定删掉本商品!!',
+        onOk() {},
+        onCancel() {}
+      })
+    }
     return (
       <div className="cart-item">
         <div className="item-left">
@@ -43,7 +53,7 @@ const Item = React.createClass({
           </div>
           <div className="r3">
             <div className="delete">
-              <Icon type="delete" name={this.props.item.id} />
+              <Icon type="delete" name={this.props.item.id} onClick={showConfirm} />
             </div>
             <p><span className="now-num">{this.props.item.intefrals}</span><span>积分</span></p>
           </div>
