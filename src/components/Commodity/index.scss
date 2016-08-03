@@ -51,12 +51,12 @@ a.commodity-item {
   }
 }
 
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 320px) {
   a.commodity-item {
     height: 145px;
 
     img {
-      height: 110px;
+      height: 100px;
     }
 
     p.commodity-name {
