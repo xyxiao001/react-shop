@@ -6,6 +6,7 @@ import Navbar from 'components/Navbar'
 import Top from 'components/Top'
 import Commodity from 'components/Commodity'
 import Mark from 'components/Mark'
+// import $ from 'jquery'
 
 import './index.scss'
 
@@ -54,6 +55,23 @@ export default React.createClass({
         }
       ]
     }
+  },
+  componentDidMount() {
+    // var self = this
+    // $.ajax({
+    //   type: 'GET',
+    //   async: false,
+    //   url: 'http://shop.xuanwolei.cn/index.php?m=Find&a=index',
+    //   dataType: 'jsonp',
+    //   jsonp: 'callback',
+    //   jsonpCallback: 'jsonpCallback',
+    //   success: function (data) {
+    //     console.log(data)
+    //   },
+    //   error: function () {
+    //     console.log('请求失败')
+    //   }
+    // })
   },
   render() {
     var menus = []

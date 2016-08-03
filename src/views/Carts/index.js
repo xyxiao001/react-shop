@@ -1,5 +1,5 @@
 import React from 'react'
-import { Checkbox, Button, Icon, Modal } from 'antd'
+import { Checkbox, Button, Icon, Modal, message } from 'antd'
 
 // 导入组件
 import Navbar from 'components/Navbar'
@@ -14,7 +14,10 @@ const Item = React.createClass({
   propTypes: {
     item: React.PropTypes.object,
     change: React.PropTypes.func,
-    showConfirm: React.PropTypes.func
+    deleteItem: React.PropTypes.func,
+    add: React.PropTypes.func,
+    minus: React.PropTypes.func,
+    changeInput: React.PropTypes.func
   },
   render() {
     return (
@@ -34,21 +37,21 @@ const Item = React.createClass({
             <p className="shop-name">{this.props.item.name}</p>
             <div className="num-select">
               <div className="num-reduce">
-                <Icon type="minus" />
+                <Icon type="minus" onClick={this.props.minus} name={this.props.item.id} />
               </div>
               <div className="num-show">
-                <input type="text" defaultValue={this.props.item.num} />
+                <input type="number" value={this.props.item.num} onChange={this.props.changeInput} />
               </div>
               <div className="num-add">
-                <Icon type="plus" />
+                <Icon type="plus" onClick={this.props.add} name={this.props.item.id} />
               </div>
             </div>
           </div>
           <div className="r3">
             <div className="delete">
-              <Icon type="delete" name={this.props.item.id} onClick={this.props.showConfirm} />
+              <Icon type="delete" name={this.props.item.id} onClick={this.props.deleteItem} />
             </div>
-            <p><span className="now-num">{this.props.item.intefrals}</span><span>积分</span></p>
+            <p><span className="now-num">{this.props.item.integrals}</span><span>积分</span></p>
           </div>
         </div>
       </div>
@@ -64,8 +67,8 @@ export default React.createClass({
           id: 100,
           imgSrc: 'http://yanxuan.nosdn.127.net/e12c7e19e727d346da443dcfa06ff0a5.png?quality=90&thumbnail=200x200&imageView',
           num: 1,
-          intefral: 500,
-          intefrals: 500,
+          integral: 500,
+          integrals: 500,
           name: '2条 皇室御用超柔面巾',
           checked: false
         },
@@ -73,8 +76,8 @@ export default React.createClass({
           id: 101,
           imgSrc: 'http://yanxuan.nosdn.127.net/1be97c3caf5e94ec851a69634c2c9ecd.png?quality=90&thumbnail=200x200&imageView',
           num: 2,
-          intefral: 200,
-          intefrals: 400,
+          integral: 200,
+          integrals: 400,
           name: '全棉针织条纹四件套',
           checked: false
         },
@@ -82,8 +85,8 @@ export default React.createClass({
           id: 103,
           imgSrc: 'http://yanxuan.nosdn.127.net/1be97c3caf5e94ec851a69634c2c9ecd.png?quality=90&thumbnail=200x200&imageView',
           num: 1,
-          intefral: 200,
-          intefrals: 200,
+          integral: 200,
+          integrals: 200,
           name: '全棉针织条纹四件套',
           checked: false
         }
@@ -103,25 +106,141 @@ export default React.createClass({
           key={item.id}
           item={item}
           change={change}
-          showConfirm={showConfirm}
+          deleteItem={deleteItem}
+          add={add}
+          minus={minus}
+          changeInput={changeInput}
         />
       )
     })
+    // 全选逻辑
     function changeALl(e) {
-      var select = e.target.checked === true
+      var select = e.target.checked
+      var newItems = self.state.items
+      var allPrice = 0
+      newItems.forEach((newItem) => {
+        newItem.checked = select
+        allPrice = allPrice + newItem.integrals
+      })
+      if (!select) {
+        allPrice = 0
+      }
       self.setState({
-        selectAll: select
+        selectAll: select,
+        items: newItems,
+        allIntegral: allPrice
       })
     }
+    // 单个选择逻辑
     function change(e) {
+      var select = e.target.checked
+      var id = parseInt(e.target.name.substring(8, e.target.name.length))
+      var newItems = self.state.items
+      var allPrice = self.state.allIntegral
+      var all = true
+      newItems.forEach((newItem) => {
+        if (id === newItem.id) {
+          newItem.checked = select
+          if (select) {
+            allPrice = allPrice + newItem.integrals
+          } else {
+            allPrice = allPrice - newItem.integrals
+          }
+        }
+        if (newItem.checked === false) {
+          all = false
+        }
+      })
+      self.setState({
+        items: newItems,
+        allIntegral: allPrice,
+        selectAll: all
+      })
     }
-    function showConfirm() {
+    // 删除
+    function deleteItem(e) {
+      var id = parseInt(e.target.getAttribute('name'))
       confirm({
         title: '你确定删掉本商品!!',
-        onOk() {},
+        onOk() {
+          var newItems = []
+          var allPrice = self.state.allIntegral
+          var all = true
+          self.state.items.forEach((newItem) => {
+            if (id !== newItem.id) {
+              newItems.push(newItem)
+            }
+            if (newItem.checked === false) {
+              all = false
+            }
+            if (id === newItem.id && newItem.checked === true) {
+              allPrice = allPrice - newItem.integrals
+            }
+          })
+          self.setState({
+            items: newItems,
+            allIntegral: allPrice,
+            selectAll: all
+          })
+        },
         onCancel() {}
       })
     }
+
+    // 商品添加
+    function add(e) {
+      var id = parseInt(e.target.getAttribute('name'))
+      var newItems = self.state.items
+      var allPrice = self.state.allIntegral
+      newItems.forEach((newItem) => {
+        if (id === newItem.id) {
+          newItem.num = newItem.num + 1
+          newItem.integrals = newItem.num * newItem.integral
+
+          if (newItem.checked) {
+            allPrice = allPrice + newItem.integral
+          }
+        }
+      })
+      self.setState({
+        items: newItems,
+        allIntegral: allPrice
+      })
+    }
+
+    // 商品减少
+    function minus(e) {
+      var id = parseInt(e.target.getAttribute('name'))
+      var newItems = self.state.items
+      var allPrice = self.state.allIntegral
+      newItems.forEach((newItem) => {
+        if (id === newItem.id) {
+          if (newItem.num > 1) {
+            newItem.num = newItem.num - 1
+            newItem.integrals = newItem.num * newItem.integral
+            if (newItem.checked) {
+              allPrice = allPrice - newItem.integral
+            }
+          } else {
+            msg('商品至少买一件哟！')
+          }
+        }
+      })
+      self.setState({
+        items: newItems,
+        allIntegral: allPrice
+      })
+    }
+
+    function msg(info) {
+      message.info(info)
+    }
+
+    // 输入框
+    function changeInput(e) {
+      // var id = parseInt(e.target.getAttribute('name'))
+    }
+
     return (
       <div className="wrap">
         <Top title="购物车" />
@@ -133,7 +252,7 @@ export default React.createClass({
         </div>
         <div className={shopList + ' ' + 'shop-list'}>
           <div className="cart-control">
-            <Checkbox onChange={changeALl}>全选</Checkbox>
+            <Checkbox onChange={changeALl} checked={this.state.selectAll}>全选</Checkbox>
             <span className="total">总计:<span className="total-num">{this.state.allIntegral}积分</span></span>
             <Button type="primary">兑换</Button>
           </div>

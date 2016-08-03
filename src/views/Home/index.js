@@ -77,9 +77,8 @@ export default React.createClass({
       jsonp: 'callback',
       jsonpCallback: 'jsonpCallback',
       success: function (data) {
-        console.log(data)
         self.setState({
-          // slideList: data.ad
+          slideList: data.ad,
           hots: data.hots_item,
           limits: data.limit_item,
           newItems: data.new_item
