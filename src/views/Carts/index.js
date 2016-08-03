@@ -40,7 +40,10 @@ const Item = React.createClass({
                 <Icon type="minus" onClick={this.props.minus} name={this.props.item.id} />
               </div>
               <div className="num-show">
-                <input type="number" value={this.props.item.num} onChange={this.props.changeInput} />
+                <input type="number"
+                  value={this.props.item.num}
+                  name={this.props.item.id}
+                  onChange={this.props.changeInput} />
               </div>
               <div className="num-add">
                 <Icon type="plus" onClick={this.props.add} name={this.props.item.id} />
@@ -238,7 +241,28 @@ export default React.createClass({
 
     // 输入框
     function changeInput(e) {
-      // var id = parseInt(e.target.getAttribute('name'))
+      var id = parseInt(e.target.getAttribute('name'))
+      // 输入的值
+      var num = parseInt(e.target.value)
+      var newItems = self.state.items
+      var allPrice = self.state.allIntegral
+      newItems.forEach((newItem) => {
+        if (id === newItem.id) {
+          if (num >= 1) {
+            newItem.num = num
+            newItem.integrals = newItem.num * newItem.integral
+            if (newItem.checked) {
+              allPrice = allPrice + newItem.integral
+            }
+          } else {
+            msg('商品至少买一件哟！')
+          }
+        }
+      })
+      self.setState({
+        items: newItems,
+        allIntegral: allPrice
+      })
     }
 
     return (
