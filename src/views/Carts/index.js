@@ -245,17 +245,22 @@ export default React.createClass({
       // 输入的值
       var num = parseInt(e.target.value)
       var newItems = self.state.items
-      var allPrice = self.state.allIntegral
+      var allPrice = 0
       newItems.forEach((newItem) => {
         if (id === newItem.id) {
           if (num >= 1) {
             newItem.num = num
             newItem.integrals = newItem.num * newItem.integral
             if (newItem.checked) {
-              allPrice = allPrice + newItem.integral
+              allPrice = allPrice + newItem.integrals
             }
           } else {
+            newItem.num = 0
+            newItem.integrals = newItem.num * newItem.integral
             msg('商品至少买一件哟！')
+            if (newItem.checked) {
+              allPrice = allPrice + newItem.integrals
+            }
           }
         }
       })
