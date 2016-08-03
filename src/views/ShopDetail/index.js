@@ -80,6 +80,7 @@ export default React.createClass({
         <Commodity />
         <p className='apply'><span className='fl'>支付方式</span><span className='online fr'>在线支付</span></p>
         <User />
+        <Link to='/integral'><span className='back'>返回</span></Link>
         <div className="bottom">
           <Link to="/">申请退货</Link>
           <Link to="/">联系客服</Link>

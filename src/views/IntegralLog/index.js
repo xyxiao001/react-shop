@@ -29,55 +29,18 @@ const User = React.createClass({
   }
 })
 
-// 兑换详情
-const Conversion = React.createClass({
-  propTypes: {
-    item: React.PropTypes.object
-  },
+const Integral = React.createClass({
   render() {
     return (
-      <Link to={`/ShopDetail?${this.props.item.id}`}>
-        <div className="conversionBox">
-          <p>单号：<span>{this.props.item.addNum}</span></p>
-          <p>商品：<span>{this.props.item.commodity}</span><span className='send fr'>{this.props.item.shipments}</span></p>
-        </div>
-      </Link>
+      <div className='integralBox'>
+        <p>积分记录页面</p>
+      </div>
     )
   }
 })
 
 export default React.createClass({
-  getInitialState() {
-    return {
-      shops: [
-        {
-          id: 0,
-          addNum: '123456789',
-          commodity: '冰激凌',
-          shipments: '待发货'
-        },
-        {
-          id: 1,
-          addNum: '123456789',
-          commodity: '冰激凌2',
-          shipments: '已发货'
-        },
-        {
-          id: 2,
-          addNum: '123456789',
-          commodity: '冰激凌2',
-          shipments: '已发货'
-        }
-      ]
-    }
-  },
   render() {
-    var shops = []
-    this.state.shops.forEach((shop) => {
-      shops.push(
-        <Conversion item={shop} key={shop.id} />
-      )
-    })
     return (
       <div className="wrap">
         <Top title="我的积分" />
@@ -86,9 +49,7 @@ export default React.createClass({
           <Link to='/integral' className='conversion fl'>兑换记录</Link>
           <Link to='/integralLog' className='integral fr'>积分记录</Link>
         </div>
-        <div>
-          {shops}
-        </div>
+        <Integral />
         <Navbar />
       </div>
     )
