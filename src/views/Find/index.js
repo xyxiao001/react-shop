@@ -36,21 +36,21 @@ export default React.createClass({
       hots: [
         {
           id: 100,
-          src: 'http://yanxuan.nosdn.127.net/07e2057d35153f063cf042177d6a815e.png?imageView&quality=85&thumbnail=330x330',
-          name: '茶香酥200克',
+          img: 'http://yanxuan.nosdn.127.net/07e2057d35153f063cf042177d6a815e.png?imageView&quality=85&thumbnail=330x330',
+          title: '茶香酥200克',
           num: '300积分'
         },
         {
           id: 102,
-          src: 'http://yanxuan.nosdn.127.net/d34867f2e905f76eb7c8f46dcb2e052f.png?imageView&quality=85&thumbnail=330x330',
-          name: '带盖棉麻涤内衣收纳盒',
-          num: '500积分'
+          img: 'http://yanxuan.nosdn.127.net/d34867f2e905f76eb7c8f46dcb2e052f.png?imageView&quality=85&thumbnail=330x330',
+          title: '带盖棉麻涤内衣收纳盒',
+          jf_price: '500积分'
         },
         {
           id: 103,
-          src: 'http://yanxuan.nosdn.127.net/4fb112a597732ea093df1d495587b04e.png?imageView&quality=85&thumbnail=330x330',
-          name: '速干防滑沐浴拖鞋',
-          num: '250积分'
+          img: 'http://yanxuan.nosdn.127.net/4fb112a597732ea093df1d495587b04e.png?imageView&quality=85&thumbnail=330x330',
+          title: '速干防滑沐浴拖鞋',
+          jf_price: '250积分'
         }
       ]
     }

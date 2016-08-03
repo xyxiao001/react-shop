@@ -113,6 +113,9 @@
 
           p.shop-name {
             font-size: 14px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
           }
 
           .num-select {
@@ -203,4 +206,33 @@
 
 .ant-confirm {
   width: 90% !important;
+  top: 200px;
+}
+
+@media screen and (max-width: 350px) {
+  .shop-list {
+    .cart-list {
+      .cart-item {
+        .item-right {
+          .r2 {
+            .num-select {
+              div.num-add, div.num-reduce {
+                width: 30px;
+                height: 30px;
+
+                i {
+                  padding-left: 8px;
+                }
+              }
+
+              div.num-show {
+                width: 40px;
+                height: 30px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

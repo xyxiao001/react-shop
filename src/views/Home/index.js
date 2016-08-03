@@ -62,7 +62,9 @@ export default React.createClass({
           title: '速干防滑沐浴拖鞋',
           jf_price: '250积分'
         }
-      ]
+      ],
+      limits: [],
+      newItems: []
     }
   },
   componentDidMount() {
@@ -78,7 +80,9 @@ export default React.createClass({
         console.log(data)
         self.setState({
           // slideList: data.ad
-          // hots: data.hots_item
+          hots: data.hots_item,
+          limits: data.limit_item,
+          newItems: data.new_item
         })
       },
       error: function () {
@@ -94,17 +98,30 @@ export default React.createClass({
         <Commodity key={hot.id} item={hot} />
       )
     })
+    var limits = []
+    this.state.limits.forEach((limit) => {
+      limits.push(
+        <Commodity key={limit.id} item={limit} />
+      )
+    })
+    var newItems = []
+    this.state.newItems.forEach((newItem) => {
+      newItems.push(
+        <Commodity key={newItem.id} item={newItem} />
+      )
+    })
     return (
       <div className="wrap">
         <Top title="精选" />
         <SlideWrap slides={this.state.slideList} />
         <Notice notices={this.state.notices} />
+        <Mark name={'新品推荐'} />
         <div className="commodity-list">
-          {hots}
+          {newItems}
         </div>
         <Mark name={'限时兑换'} />
         <div className="commodity-list">
-          {hots}
+          {limits}
         </div>
         <Mark name={'推荐兑换'} />
         <div className="commodity-list">

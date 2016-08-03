@@ -13,23 +13,16 @@ const confirm = Modal.confirm
 const Item = React.createClass({
   propTypes: {
     item: React.PropTypes.object,
-    checked: React.PropTypes.bool,
-    change: React.PropTypes.func
+    change: React.PropTypes.func,
+    showConfirm: React.PropTypes.func
   },
   render() {
-    function showConfirm() {
-      confirm({
-        title: '你确定删掉本商品!!',
-        onOk() {},
-        onCancel() {}
-      })
-    }
     return (
       <div className="cart-item">
         <div className="item-left">
           <Checkbox
             name={'checkout' + this.props.item.id}
-            checked={this.props.checked || this.props.item.checked}
+            checked={this.props.item.checked}
             onChange={this.props.change}
           />
         </div>
@@ -53,7 +46,7 @@ const Item = React.createClass({
           </div>
           <div className="r3">
             <div className="delete">
-              <Icon type="delete" name={this.props.item.id} onClick={showConfirm} />
+              <Icon type="delete" name={this.props.item.id} onClick={this.props.showConfirm} />
             </div>
             <p><span className="now-num">{this.props.item.intefrals}</span><span>积分</span></p>
           </div>
@@ -84,6 +77,15 @@ export default React.createClass({
           intefrals: 400,
           name: '全棉针织条纹四件套',
           checked: false
+        },
+        {
+          id: 103,
+          imgSrc: 'http://yanxuan.nosdn.127.net/1be97c3caf5e94ec851a69634c2c9ecd.png?quality=90&thumbnail=200x200&imageView',
+          num: 1,
+          intefral: 200,
+          intefrals: 200,
+          name: '全棉针织条纹四件套',
+          checked: false
         }
       ],
       selectAll: false,
@@ -100,17 +102,25 @@ export default React.createClass({
         <Item
           key={item.id}
           item={item}
-          checked={this.state.selectAll}
           change={change}
+          showConfirm={showConfirm}
         />
       )
     })
     function changeALl(e) {
+      var select = e.target.checked === true
       self.setState({
-        selectAll: e.target.checked === true
+        selectAll: select
       })
     }
     function change(e) {
+    }
+    function showConfirm() {
+      confirm({
+        title: '你确定删掉本商品!!',
+        onOk() {},
+        onCancel() {}
+      })
     }
     return (
       <div className="wrap">
