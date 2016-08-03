@@ -9,7 +9,7 @@ export default React.createClass({
   },
   render() {
     return (
-      <Link className="commodity-item" to={`/detail?${this.props.item.id}`}>
+      <Link className="commodity-item" to={{ pathname: '/detail', query: { id: this.props.item.id } }}>
         <img src={this.props.item.img} alt={this.props.item.title} />
         <p className="commodity-name">{this.props.item.title}</p>
         <p className="commodity-num">{this.props.item.jf_price} <span>积分</span></p>
