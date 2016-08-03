@@ -11,9 +11,9 @@ const utils = require('./utils')
 
 module.exports = merge(base, {
   output: {
-    filename: utils.assetsPath('[name].[chunkhash].js'),
+    filename: utils.assetsPath('[name].js'),
     path: config.build.assetsRoot,
-    chunkFilename: utils.assetsPath('[id].[chunkhash].js')
+    chunkFilename: utils.assetsPath('[id].js')
   },
   module: {
     loaders: [
@@ -49,7 +49,7 @@ module.exports = merge(base, {
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new ExtractTextPlugin(
-      utils.assetsPath('[name].[contenthash].css')
+      utils.assetsPath('[name].css')
     ),
     new HtmlWebpackPlugin({
       filename: config.build.index,
