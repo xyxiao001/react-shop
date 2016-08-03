@@ -1,7 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 // 导入组件
-import Navbar from 'components/Navbar'
 import Top from 'components/Top'
 import SlideWrap from 'components/SlideWrap'
 
@@ -62,12 +62,12 @@ export default React.createClass({
               江浙沪包邮
             </div>
           </div>
-          <div className="detail-control">
-            <button className="btn btn-primary">加入购物车</button>
-            <button className="btn btn-success">立即兑换</button>
-          </div>
         </div>
-        <Navbar />
+        <Link to='/'><span className='back'>首页</span></Link>
+        <div className="bottom">
+          <a>加入购入车</a>
+          <a>立即兑换</a>
+        </div>
       </div>
     )
   }
