@@ -6,7 +6,7 @@ import Navbar from 'components/Navbar'
 import Top from 'components/Top'
 import Commodity from 'components/Commodity'
 import Mark from 'components/Mark'
-// import $ from 'jquery'
+import GetData from '../ajax'
 
 import './index.scss'
 
@@ -39,7 +39,7 @@ export default React.createClass({
           id: 100,
           img: 'http://yanxuan.nosdn.127.net/07e2057d35153f063cf042177d6a815e.png?imageView&quality=85&thumbnail=330x330',
           title: '茶香酥200克',
-          num: '300积分'
+          jf_price: '300积分'
         },
         {
           id: 102,
@@ -57,21 +57,13 @@ export default React.createClass({
     }
   },
   componentDidMount() {
-    // var self = this
-    // $.ajax({
-    //   type: 'GET',
-    //   async: false,
-    //   url: 'http://shop.xuanwolei.cn/index.php?m=Find&a=index',
-    //   dataType: 'jsonp',
-    //   jsonp: 'callback',
-    //   jsonpCallback: 'jsonpCallback',
-    //   success: function (data) {
-    //     console.log(data)
-    //   },
-    //   error: function () {
-    //     console.log('请求失败')
-    //   }
-    // })
+    var self = this
+    GetData('m=Find&a=index', (data) => {
+      self.setState({
+        findMenus: data.findMenus,
+        hots: data.hots
+      })
+    })
   },
   render() {
     var menus = []

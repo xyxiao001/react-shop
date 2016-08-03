@@ -10,7 +10,7 @@ import SlideWrap from 'components/SlideWrap'
 import Notice from 'components/Notice'
 import Commodity from 'components/Commodity'
 import Mark from 'components/Mark'
-import $ from 'jquery'
+import GetData from '../ajax'
 
 export default React.createClass({
   getInitialState() {
@@ -107,24 +107,13 @@ export default React.createClass({
   },
   componentDidMount() {
     var self = this
-    $.ajax({
-      type: 'GET',
-      async: false,
-      url: 'http://shop.xuanwolei.cn/index.php?m=Index&a=item',
-      dataType: 'jsonp',
-      jsonp: 'callback',
-      jsonpCallback: 'jsonpCallback',
-      success: function (data) {
-        self.setState({
-          slideList: data.ad,
-          hots: data.hots_item,
-          limits: data.limit_item,
-          newItems: data.new_item
-        })
-      },
-      error: function () {
-        console.log('请求失败')
-      }
+    GetData('m=Index&a=item', (data) => {
+      self.setState({
+        slideList: data.ad,
+        hots: data.hots_item,
+        limits: data.limit_item,
+        newItems: data.new_item
+      })
     })
   },
   render() {

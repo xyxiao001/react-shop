@@ -65,7 +65,7 @@ export default React.createClass({
         </div>
         <Link to='/'><span className='back'>首页</span></Link>
         <div className="bottom">
-          <a>加入购入车</a>
+          <a>加入购物车</a>
           <a>立即兑换</a>
         </div>
       </div>
