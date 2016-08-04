@@ -51,6 +51,7 @@
 }
 .userBox{
   background: #E6E6E6;
+  height: 420px;
   .usermsg{
     margin-top: -18px;
     padding: 10px 20px;
@@ -100,13 +101,13 @@ div.bottom {
 }
 .back{
   position: fixed;
-  bottom: 75px;
+  bottom: 65px;
   right: 20px;
   width: 50px;
   height: 50px;
   color: #666;
   border-radius: 50%;
-  border: 1px solid #ddd;
+  border: 1px solid #fff;
   line-height: 50px;
   text-align: center;
 }

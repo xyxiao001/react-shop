@@ -64,39 +64,15 @@ const Item = React.createClass({
 })
 
 export default React.createClass({
+  contextTypes: {
+    route: React.PropTypes.object
+  },
   getInitialState() {
     return {
-      items: [
-        // {
-        //   id: 100,
-        //   imgSrc: 'http://yanxuan.nosdn.127.net/e12c7e19e727d346da443dcfa06ff0a5.png?quality=90&thumbnail=200x200&imageView',
-        //   buy_num: 1,
-        //   integral: 500,
-        //   integral_total: 500,
-        //   title: '2条 皇室御用超柔面巾',
-        //   checked: false
-        // },
-        // {
-        //   id: 101,
-        //   imgSrc: 'http://yanxuan.nosdn.127.net/1be97c3caf5e94ec851a69634c2c9ecd.png?quality=90&thumbnail=200x200&imageView',
-        //   buy_num: 2,
-        //   integral: 200,
-        //   integral_total: 400,
-        //   title: '全棉针织条纹四件套',
-        //   checked: false
-        // },
-        // {
-        //   id: 103,
-        //   imgSrc: 'http://yanxuan.nosdn.127.net/1be97c3caf5e94ec851a69634c2c9ecd.png?quality=90&thumbnail=200x200&imageView',
-        //   buy_num: 1,
-        //   integral: 200,
-        //   integral_total: 200,
-        //   title: '全棉针织条纹四件套',
-        //   checked: false
-        // }
-      ],
+      items: [],
       selectAll: false,
-      allIntegral: 0
+      allIntegral: 0,
+      myIntegral: 500
     }
   },
   componentDidMount() {
@@ -229,12 +205,12 @@ export default React.createClass({
         if (id === newItem.id) {
           if (newItem.buy_num > 1) {
             newItem.buy_num = newItem.buy_num - 1
-            newItem.integral_total = newItem.num * newItem.integral
+            newItem.integral_total = newItem.buy_num * newItem.integral
             if (newItem.checked) {
               allPrice = allPrice - newItem.integral
             }
           } else {
-            msg('商品至少买一件哟！')
+            msg('商品至少买一件哟！', 0.5)
           }
         }
       })
@@ -244,8 +220,8 @@ export default React.createClass({
       })
     }
 
-    function msg(info) {
-      message.info(info, 0.5)
+    function msg(info, t) {
+      message.info(info, t)
     }
 
     // 输入框
@@ -266,7 +242,7 @@ export default React.createClass({
           } else {
             newItem.buy_num = 0
             newItem.integral_total = newItem.buy_num * newItem.integral
-            msg('商品至少买一件哟！')
+            msg('商品至少买一件哟！', 0.5)
             if (newItem.checked) {
               allPrice = allPrice + newItem.integral_total
             }
@@ -279,6 +255,16 @@ export default React.createClass({
       })
     }
 
+    // 兑换
+    function goOrder() {
+      if (self.state.allIntegral === 0) {
+        msg('还没选择商品呢！', 0.75)
+      } else if (self.state.allIntegral > self.state.myIntegral) {
+        msg('积分还不够呢！ 去赚积分，或者刷新试试。', 1.5)
+      } else {
+        console.log(self.props.history)
+      }
+    }
     return (
       <div className="wrap">
         <Top title="购物车" />
@@ -292,7 +278,7 @@ export default React.createClass({
           <div className="cart-control">
             <Checkbox onChange={changeALl} checked={this.state.selectAll}>全选</Checkbox>
             <span className="total">总计:<span className="total-num">{this.state.allIntegral}积分</span></span>
-            <Button type="primary">兑换</Button>
+            <Button type="primary" onClick={goOrder}>兑换</Button>
           </div>
           <div className="cart-list">
             {list}

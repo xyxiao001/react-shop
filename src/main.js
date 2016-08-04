@@ -10,6 +10,7 @@ import IntegralLog from 'views/IntegralLog'
 import Detail from 'views/CommodityDetail'
 import FindDetail from 'views/FindDetail'
 import ShopDetail from 'views/ShopDetail'
+import Order from 'views/Order'
 
 render((
   <Router history={browserHistory}>
@@ -21,5 +22,7 @@ render((
     <Route path='/Detail' component={Detail} />
     <Route path='/FindDetail' component={FindDetail} />
     <Route path='/ShopDetail' component={ShopDetail} />
+    <Route path='/Order' component={Order} />
+    <Route path='*' component={Home} />
   </Router>
 ), document.getElementById('app'))
