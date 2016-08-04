@@ -6,7 +6,7 @@ import Navbar from 'components/Navbar'
 import Top from 'components/Top'
 import Commodity from 'components/Commodity'
 import Mark from 'components/Mark'
-import GetData from '../ajax'
+import { GetData } from '../ajax'
 
 import './index.scss'
 

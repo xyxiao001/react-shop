@@ -1,6 +1,7 @@
 import $ from 'jquery'
 
-export default function getData(url, callback) {
+// get
+export function GetData(url, callback) {
   $.ajax({
     type: 'GET',
     async: false,
@@ -9,8 +10,25 @@ export default function getData(url, callback) {
     jsonp: 'callback',
     jsonpCallback: 'jsonpCallback',
     success: callback,
-    error: function () {
-      console.log('请求失败')
+    error: function (error) {
+      console.log('请求失败' + error)
+    }
+  })
+}
+
+// post
+export function PostData(url, data, callback) {
+  $.ajax({
+    type: 'GET',
+    async: false,
+    url: 'http://wxshop.xuanwolei.cn/index.php?' + url,
+    data: data,
+    dataType: 'jsonp',
+    jsonp: 'callback',
+    jsonpCallback: 'jsonpCallback',
+    success: callback,
+    error: function (error) {
+      console.log('请求失败' + error)
     }
   })
 }

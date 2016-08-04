@@ -236,7 +236,7 @@ export default React.createClass({
     }
 
     function msg(info) {
-      message.info(info)
+      message.info(info, 0.5)
     }
 
     // 输入框

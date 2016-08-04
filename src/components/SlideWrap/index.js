@@ -10,9 +10,9 @@ export default React.createClass({
   },
   render() {
     var rows = []
-    this.props.slides.forEach((slide) => {
+    this.props.slides.forEach((slide, index) => {
       rows.push(
-        <a className="slide-item" key={slide.src}>
+        <a className="slide-item" key={index}>
           <img src={slide.src} alt={slide.id} />
         </a>
       )
