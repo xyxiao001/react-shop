@@ -35,14 +35,14 @@ const Item = React.createClass({
             <img src={this.props.item.imgSrc}></img>
           </div>
           <div className="r2">
-            <p className="shop-name">{this.props.item.name}</p>
+            <p className="shop-name">{this.props.item.title}</p>
             <div className="num-select">
               <div className="num-reduce">
                 <Icon type="minus" onClick={this.props.minus} name={this.props.item.id} />
               </div>
               <div className="num-show">
                 <input type="number"
-                  value={this.props.item.num}
+                  value={this.props.item.buy_num}
                   name={this.props.item.id}
                   onChange={this.props.changeInput} />
               </div>
@@ -55,7 +55,7 @@ const Item = React.createClass({
             <div className="delete">
               <Icon type="delete" name={this.props.item.id} onClick={this.props.deleteItem} />
             </div>
-            <p><span className="now-num">{this.props.item.integrals}</span><span>积分</span></p>
+            <p><span className="now-num">{this.props.item.integral_total}</span><span>积分</span></p>
           </div>
         </div>
       </div>
@@ -67,41 +67,45 @@ export default React.createClass({
   getInitialState() {
     return {
       items: [
-        {
-          id: 100,
-          imgSrc: 'http://yanxuan.nosdn.127.net/e12c7e19e727d346da443dcfa06ff0a5.png?quality=90&thumbnail=200x200&imageView',
-          num: 1,
-          integral: 500,
-          integrals: 500,
-          name: '2条 皇室御用超柔面巾',
-          checked: false
-        },
-        {
-          id: 101,
-          imgSrc: 'http://yanxuan.nosdn.127.net/1be97c3caf5e94ec851a69634c2c9ecd.png?quality=90&thumbnail=200x200&imageView',
-          num: 2,
-          integral: 200,
-          integrals: 400,
-          name: '全棉针织条纹四件套',
-          checked: false
-        },
-        {
-          id: 103,
-          imgSrc: 'http://yanxuan.nosdn.127.net/1be97c3caf5e94ec851a69634c2c9ecd.png?quality=90&thumbnail=200x200&imageView',
-          num: 1,
-          integral: 200,
-          integrals: 200,
-          name: '全棉针织条纹四件套',
-          checked: false
-        }
+        // {
+        //   id: 100,
+        //   imgSrc: 'http://yanxuan.nosdn.127.net/e12c7e19e727d346da443dcfa06ff0a5.png?quality=90&thumbnail=200x200&imageView',
+        //   buy_num: 1,
+        //   integral: 500,
+        //   integral_total: 500,
+        //   title: '2条 皇室御用超柔面巾',
+        //   checked: false
+        // },
+        // {
+        //   id: 101,
+        //   imgSrc: 'http://yanxuan.nosdn.127.net/1be97c3caf5e94ec851a69634c2c9ecd.png?quality=90&thumbnail=200x200&imageView',
+        //   buy_num: 2,
+        //   integral: 200,
+        //   integral_total: 400,
+        //   title: '全棉针织条纹四件套',
+        //   checked: false
+        // },
+        // {
+        //   id: 103,
+        //   imgSrc: 'http://yanxuan.nosdn.127.net/1be97c3caf5e94ec851a69634c2c9ecd.png?quality=90&thumbnail=200x200&imageView',
+        //   buy_num: 1,
+        //   integral: 200,
+        //   integral_total: 200,
+        //   title: '全棉针织条纹四件套',
+        //   checked: false
+        // }
       ],
       selectAll: false,
       allIntegral: 0
     }
   },
   componentDidMount() {
+    const self = this
     GetData('m=Cart&a=lists', function (data) {
       console.log(data)
+      self.setState({
+        items: data.items
+      })
     })
   },
   render() {
@@ -129,7 +133,7 @@ export default React.createClass({
       var allPrice = 0
       newItems.forEach((newItem) => {
         newItem.checked = select
-        allPrice = allPrice + newItem.integrals
+        allPrice = allPrice + newItem.integral_total
       })
       if (!select) {
         allPrice = 0
@@ -151,9 +155,9 @@ export default React.createClass({
         if (id === newItem.id) {
           newItem.checked = select
           if (select) {
-            allPrice = allPrice + newItem.integrals
+            allPrice = allPrice + newItem.integral_total
           } else {
-            allPrice = allPrice - newItem.integrals
+            allPrice = allPrice - newItem.integral_total
           }
         }
         if (newItem.checked === false) {
@@ -183,7 +187,7 @@ export default React.createClass({
               all = false
             }
             if (id === newItem.id && newItem.checked === true) {
-              allPrice = allPrice - newItem.integrals
+              allPrice = allPrice - newItem.integral_total
             }
           })
           self.setState({
@@ -203,8 +207,8 @@ export default React.createClass({
       var allPrice = self.state.allIntegral
       newItems.forEach((newItem) => {
         if (id === newItem.id) {
-          newItem.num = newItem.num + 1
-          newItem.integrals = newItem.num * newItem.integral
+          newItem.buy_num = newItem.buy_num + 1
+          newItem.integral_total = newItem.buy_num * newItem.integral
 
           if (newItem.checked) {
             allPrice = allPrice + newItem.integral
@@ -224,9 +228,9 @@ export default React.createClass({
       var allPrice = self.state.allIntegral
       newItems.forEach((newItem) => {
         if (id === newItem.id) {
-          if (newItem.num > 1) {
-            newItem.num = newItem.num - 1
-            newItem.integrals = newItem.num * newItem.integral
+          if (newItem.buy_num > 1) {
+            newItem.buy_num = newItem.buy_num - 1
+            newItem.integral_total = newItem.num * newItem.integral
             if (newItem.checked) {
               allPrice = allPrice - newItem.integral
             }
@@ -255,17 +259,17 @@ export default React.createClass({
       newItems.forEach((newItem) => {
         if (id === newItem.id) {
           if (num >= 1) {
-            newItem.num = num
-            newItem.integrals = newItem.num * newItem.integral
+            newItem.buy_num = num
+            newItem.integral_total = newItem.buy_num * newItem.integral
             if (newItem.checked) {
-              allPrice = allPrice + newItem.integrals
+              allPrice = allPrice + newItem.integral_total
             }
           } else {
-            newItem.num = 0
-            newItem.integrals = newItem.num * newItem.integral
+            newItem.buy_num = 0
+            newItem.integral_total = newItem.buy_num * newItem.integral
             msg('商品至少买一件哟！')
             if (newItem.checked) {
-              allPrice = allPrice + newItem.integrals
+              allPrice = allPrice + newItem.integral_total
             }
           }
         }
