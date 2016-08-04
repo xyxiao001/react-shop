@@ -4,6 +4,7 @@ import { Checkbox, Button, Icon, Modal, message } from 'antd'
 // 导入组件
 import Navbar from 'components/Navbar'
 import Top from 'components/Top'
+import { GetData } from '../ajax'
 
 import './index.scss'
 
@@ -97,6 +98,11 @@ export default React.createClass({
       selectAll: false,
       allIntegral: 0
     }
+  },
+  componentDidMount() {
+    GetData('m=Cart&a=lists', function (data) {
+      console.log(data)
+    })
   },
   render() {
     const self = this

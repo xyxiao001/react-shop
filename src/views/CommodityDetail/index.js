@@ -16,24 +16,7 @@ export default React.createClass({
   getInitialState() {
     return {
       detail: {
-        item_img: [
-          {
-            id: 100,
-            src: 'http://yanxuan.nosdn.127.net/07e2057d35153f063cf042177d6a815e.png'
-          },
-          {
-            id: 101,
-            src: 'http://yanxuan.nosdn.127.net/180d4bf8a236680bc6b5ff87d151edb3.jpg'
-          },
-          {
-            id: 102,
-            src: 'http://yanxuan.nosdn.127.net/13abc2467dca21ff015e70fb0f21a201.jpg'
-          },
-          {
-            id: 103,
-            src: 'http://yanxuan.nosdn.127.net/d85d9796539dd2a67afcd7c45bf71c09.jpg'
-          }
-        ]
+        item_img: []
       }
     }
   },
