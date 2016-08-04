@@ -102,7 +102,6 @@ export default React.createClass({
   componentDidMount() {
     const self = this
     GetData('m=Cart&a=lists', function (data) {
-      console.log(data)
       self.setState({
         items: data.items
       })
