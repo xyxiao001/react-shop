@@ -1,3 +1,4 @@
+
 .order {
 
   .address {
@@ -156,5 +157,14 @@
 
   .order-item:last-child {
     border-bottom: 0;
+  }
+}
+
+div.addressChoose {
+  position: relative;
+  width: 100%!important;
+
+  div.ant-modal-footer {
+    display: none;
   }
 }

@@ -1,23 +1,51 @@
 import React from 'react'
-import { Icon, Button } from 'antd'
+import { Icon, Button, Modal, Radio } from 'antd'
 
 import Top from 'components/Top'
 import './index.scss'
 
+const RadioGroup = Radio.Group
+
 export default React.createClass({
+  getInitialState() {
+    return {
+      showAddress: false,
+      adress: 1
+    }
+  },
   render() {
     const self = this
     function focusMsg() {
       self.refs.msg.style.height = '100px'
     }
+
     function blurMsg() {
       self.refs.msg.style.height = '60px'
     }
+
+    function chooseAddress() {
+      self.setState({
+        showAddress: true
+      })
+    }
+
+    function handleCancel() {
+      self.setState({
+        showAddress: false
+      })
+    }
+
+    function onChangeAddress(e) {
+      self.setState({
+        adress: e.target.value
+      })
+    }
+
     return (
       <div className="wrap">
         <Top title='待确认订单' />
         <div className="order">
-          <div className="address">
+          <div className="address" onClick={chooseAddress}>
             <div className="address-bg" />
             <div className="adress-item">
               <div className="left">
@@ -80,6 +108,22 @@ export default React.createClass({
           <div className="subOrder">
             <Button type="primary">提交订单</Button>
           </div>
+          <Modal
+            ref="modal"
+            className="addressChoose"
+            visible={this.state.showAddress}
+            onCancel={handleCancel}
+            style={{top: 150}}
+            title="地址选择">
+            <div className="address-select">
+              <RadioGroup onChange={onChangeAddress} value={this.state.adress}>
+                <Radio key="a" value={1}>A</Radio>
+                <Radio key="b" value={2}>B</Radio>
+                <Radio key="c" value={3}>C</Radio>
+                <Radio key="d" value={4}>D</Radio>
+              </RadioGroup>
+            </div>
+          </Modal>
         </div>
       </div>
     )
