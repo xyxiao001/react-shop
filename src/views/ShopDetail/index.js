@@ -12,7 +12,6 @@ const Detail = React.createClass({
     return {
       num: '121565466',
       integral: '889',
-      money: '￥238.00',
       time: '2016.6.25 18:35',
       isSend: '已发货'
     }
@@ -22,8 +21,7 @@ const Detail = React.createClass({
       <div className='detail'>
         <p>订单编号： <span>{this.state.num}</span></p>
         <p>消耗积分： <span>{this.state.integral}</span></p>
-        <p>订单编号： <span>{this.state.money}</span></p>
-        <p>订单编号： <span>{this.state.time}</span><span className='send fr'>{this.state.isSend}</span></p>
+        <p>下单时间 <span>{this.state.time}</span><span className='send fr'>{this.state.isSend}</span></p>
       </div>
     )
   }

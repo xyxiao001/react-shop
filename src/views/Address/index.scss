@@ -1,0 +1,25 @@
+.addressBox{
+  height: 100px;
+  padding:5px 15px;
+  border-bottom: 6px solid #E6E6E6;
+  .addressMsg p{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+  }
+  .addressEdit a{
+    margin-left: 5px;
+    color: #666;
+  }
+}
+// 添加新地址
+.addressBtn{
+  position: fixed;
+  bottom: 0;
+  .btn{
+    color: #fff;
+    height: 50px;
+    border-radius: 0px;
+    background: #2DB7F5;
+  }
+}

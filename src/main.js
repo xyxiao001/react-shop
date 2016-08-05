@@ -11,6 +11,8 @@ import Detail from 'views/CommodityDetail'
 import FindDetail from 'views/FindDetail'
 import ShopDetail from 'views/ShopDetail'
 import Order from 'views/Order'
+import Address from 'views/Address'
+import AddressEdit from 'views/AddressEdit'
 
 render((
   <Router history={browserHistory}>
@@ -23,6 +25,8 @@ render((
     <Route path='/FindDetail' component={FindDetail} />
     <Route path='/ShopDetail' component={ShopDetail} />
     <Route path='/Order' component={Order} />
+    <Route path='/Address' component={Address} />
+    <Route path='/AddressEdit' component={AddressEdit} />
     <Route path='*' component={Home} />
   </Router>
 ), document.getElementById('app'))

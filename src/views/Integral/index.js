@@ -22,6 +22,7 @@ const User = React.createClass({
         <p className="user-name"><span>{this.state.username}</span><a>赚积分</a></p>
         <p>
           <span className="userAddress">{this.state.address}</span>
+          <Link to='/address' className="managerAddress">管理收货地址</Link>
           <span className="integral-right pull-right">当前积分: <span className="my-integral">{this.state.integral}</span></span>
         </p>
       </div>
@@ -83,8 +84,8 @@ export default React.createClass({
         <Top title="我的积分" />
         <User />
         <div className='nav'>
-          <Link to='/integral' className='conversion fl'>兑换记录</Link>
-          <Link to='/integralLog' className='integral fr'>积分记录</Link>
+          <Link to='/integral' className='conversion'>兑换记录</Link>
+          <Link to='/integralLog' className='integral'>积分记录</Link>
         </div>
         <div>
           {shops}

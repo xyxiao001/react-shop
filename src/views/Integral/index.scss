@@ -1,6 +1,11 @@
-// body{
-//   background: #fff;
-// }
+// 公用类
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+// 用户信息
 .user{
   width: 100%;
   height: 70px;
@@ -19,32 +24,29 @@
       padding: 0 10px;
     }
   }
+  .managerAddress{
+    margin-left: 10px;
+    color: #E96B16;
+  }
   .integral-right{
     color:#E96B16;
   }
 }
-.fl{
-  float: left;
-}
-.fr{
-  float: right;
-}
+// 兑换记录
 .nav{
-  text-align: center;
   height: 30px;
   line-height: 30px;
   background: #2D2D35;
+  display: flex;
+  justify-content: space-around;
   a{
     color: #fff;
   }
   .conversion{
-    width: 50%;
     border-right: 2px solid #666;
   }
-  .integral{
-    width: 50%;
-  }
 }
+// 商品信息
 .conversionBox{
   padding: 10px;
   color: #666;
