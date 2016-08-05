@@ -1,21 +1,58 @@
 import React from 'react'
 import { Icon, Button, Modal, Input } from 'antd'
 import $ from 'jquery'
+import { PostData } from '../ajax'
+import { getOrder } from '../saveOrder'
 
 import Top from 'components/Top'
 import './index.scss'
+
+const Item = React.createClass({
+  propTypes: {
+    item: React.PropTypes.object
+  },
+  render() {
+    return (
+      <div className="order-item">
+        <div className="item-left">
+          <img src={this.props.item.imgSrc}></img>
+        </div>
+        <div className="item-right">
+          <div className="r1">
+            <p>{this.props.item.title}</p>
+          </div>
+          <div className="r2">
+            <p className="r2-num">x{this.props.item.buy_num}</p>
+            <p className="r2-integral">{this.props.item.jf_price}积分</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+})
 
 export default React.createClass({
   getInitialState() {
     return {
       showAddress: false,
       adress: 1,
-      addressInfo: {
-        name: '露露西',
-        phone: '15549402630',
-        address: '浙江省杭州市下城区环城北路137号'
-      }
+      addressInfo: {},
+      items: [],
+      total: 0
     }
+  },
+  componentDidMount() {
+    const self = this
+    // 订单预览参数
+    var or = JSON.parse(getOrder('order'))
+    PostData('m=Order&a=preview', {data: {items: or}}, (data) => {
+      console.log(data)
+      self.setState({
+        addressInfo: data.data.address_info,
+        items: data.data.item_list,
+        total: data.data.total_price
+      })
+    })
   },
   render() {
     const self = this
@@ -41,8 +78,8 @@ export default React.createClass({
 
     function changeAddress() {
       var info = {
-        name: $('input[name="people"]').val(),
-        phone: $('input[name="phone"]').val(),
+        consignee: $('input[name="people"]').val(),
+        mobile: $('input[name="phone"]').val(),
         address: $('textarea[name="address"]').val()
       }
       self.setState({
@@ -51,6 +88,13 @@ export default React.createClass({
       })
     }
 
+    // 渲染商品列表
+    var rows = []
+    this.state.items.forEach((item, index) => {
+      rows.push(
+        <Item key={index} item={item} />
+      )
+    })
     return (
       <div className="wrap">
         <Top title='待确认订单' />
@@ -61,8 +105,8 @@ export default React.createClass({
               <div className="left">
                 <p className="consignee">
                   <Icon type="environment-o" />
-                  <span>收货人: {this.state.addressInfo.name}</span>
-                  <span className="phone">电话: {this.state.addressInfo.phone}</span>
+                  <span>收货人: {this.state.addressInfo.consignee}</span>
+                  <span className="phone">电话: {this.state.addressInfo.mobile}</span>
                 </p>
                 <p className="receipt-address">
                   <span>收货地址: {this.state.addressInfo.address}</span>
@@ -75,37 +119,10 @@ export default React.createClass({
           </div>
           <div className="title">订单商品列表</div>
           <div className="item-list">
-            <div className="order-item">
-              <div className="item-left">
-                <img src="http://yanxuan.nosdn.127.net/5ed1303626871dedf14c0ace0615e33a.png?quality=90&thumbnail=200y200&imageView"></img>
-              </div>
-              <div className="item-right">
-                <div className="r1">
-                  <p>墨玉 日常妆容化妆套刷</p>
-                </div>
-                <div className="r2">
-                  <p className="r2-num">x1</p>
-                  <p className="r2-integral">500积分</p>
-                </div>
-              </div>
-            </div>
-            <div className="order-item">
-              <div className="item-left">
-                <img src="http://yanxuan.nosdn.127.net/1be97c3caf5e94ec851a69634c2c9ecd.png?quality=90&thumbnail=200y200&imageView"></img>
-              </div>
-              <div className="item-right">
-                <div className="r1">
-                  <p>墨玉 日常妆容化妆套刷</p>
-                </div>
-                <div className="r2">
-                  <p className="r2-num">x1</p>
-                  <p className="r2-integral">500积分</p>
-                </div>
-              </div>
-            </div>
+            {rows}
           </div>
           <div className="title total">
-            <p>总计: <span>1000积分</span></p>
+            <p>总计: <span>{this.state.total}积分</span></p>
           </div>
           <div className="msg" ref="msg">
             <div className="left">买家留言:</div>
@@ -129,11 +146,11 @@ export default React.createClass({
               <from>
                 <label>
                   <span>收货人</span>
-                  <Input type="text" name="people" defaultValue={this.state.addressInfo.name} />
+                  <Input type="text" name="people" defaultValue={this.state.addressInfo.consignee} />
                 </label>
                 <label>
                   <span>联系电话</span>
-                  <Input type="text" name="phone" defaultValue={this.state.addressInfo.phone} />
+                  <Input type="text" name="phone" defaultValue={this.state.addressInfo.mobile} />
                 </label>
                 <label>
                   <span>收货地址</span>

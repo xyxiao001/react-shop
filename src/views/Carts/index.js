@@ -5,6 +5,7 @@ import { Checkbox, Button, Icon, Modal, message } from 'antd'
 import Navbar from 'components/Navbar'
 import Top from 'components/Top'
 import { GetData } from '../ajax'
+import { setOrder } from '../saveOrder'
 
 import './index.scss'
 
@@ -65,7 +66,7 @@ const Item = React.createClass({
 
 export default React.createClass({
   contextTypes: {
-    route: React.PropTypes.object
+    router: React.PropTypes.object
   },
   getInitialState() {
     return {
@@ -262,7 +263,23 @@ export default React.createClass({
       } else if (self.state.allIntegral > self.state.myIntegral) {
         msg('积分还不够呢！ 去赚积分，或者刷新试试。', 1.5)
       } else {
-        console.log(self.props.history)
+        // 跳转到订单预览页
+        self.context.router.push({
+          pathname: '/order'
+        })
+        // 存商品信息
+        var items = []
+        self.state.items.forEach((item) => {
+          if (item.checked) {
+            items.push(
+              {
+                item_id: item.id,
+                num: item.buy_num
+              }
+            )
+          }
+        })
+        setOrder(JSON.stringify(items))
       }
     }
     return (
