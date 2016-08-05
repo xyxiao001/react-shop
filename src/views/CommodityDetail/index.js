@@ -32,7 +32,7 @@ export default React.createClass({
     items.push(
       {
         item_id: self.state.detail.id,
-        num: self.state.num
+        num: 1
       }
     )
     setOrder(JSON.stringify(items))
@@ -52,8 +52,13 @@ export default React.createClass({
   render() {
     function addCarts(e) {
       var id = e.target.name
-      PostData('m=Cart&a=add', {data: {item_id: id, num: 1}}, function (data) {
-        message.success('添加成功!', 0.75)
+      PostData('m=Cart&a=add', {data: {item_id: id, buy_num: 1}}, function (data) {
+        if (data.code === 1) {
+          message.success('添加成功!', 0.75)
+        } else {
+          message.error('添加失败!' + data.msg, 0.75)
+          console.log(data)
+        }
       })
     }
     return (
@@ -83,7 +88,7 @@ export default React.createClass({
             <div className="detail-content" dangerouslySetInnerHTML={{__html: this.state.detail.info}} />
           </div>
         </div>
-        <Link to='/'><span className='back'>首页</span></Link>
+        <Link to='/carts'><span className='back'>购物车</span></Link>
         <div className="bottom">
           <a name={this.state.detail.id} onClick={addCarts}>加入购物车</a>
           <a onClick={this.createOrder} >立即兑换</a>

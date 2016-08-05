@@ -4,7 +4,7 @@ import { Checkbox, Button, Icon, Modal, message } from 'antd'
 // 导入组件
 import Navbar from 'components/Navbar'
 import Top from 'components/Top'
-import { GetData } from '../ajax'
+import { GetData, PostData } from '../ajax'
 import { setOrder } from '../saveOrder'
 
 import './index.scss'
@@ -152,24 +152,30 @@ export default React.createClass({
       confirm({
         title: '你确定删掉本商品!!',
         onOk() {
-          var newItems = []
-          var allPrice = self.state.allIntegral
-          var all = true
-          self.state.items.forEach((newItem) => {
-            if (id !== newItem.id) {
-              newItems.push(newItem)
+          PostData('m=Cart&a=remove', {data: {item_id: id}}, function (data) {
+            if (data.code === 1) {
+              var newItems = []
+              var allPrice = self.state.allIntegral
+              var all = true
+              self.state.items.forEach((newItem) => {
+                if (id !== newItem.id) {
+                  newItems.push(newItem)
+                }
+                if (newItem.checked === false) {
+                  all = false
+                }
+                if (id === newItem.id && newItem.checked === true) {
+                  allPrice = allPrice - newItem.integral_total
+                }
+              })
+              self.setState({
+                items: newItems,
+                allIntegral: allPrice,
+                selectAll: all
+              })
+            } else {
+              message.error('删除失败')
             }
-            if (newItem.checked === false) {
-              all = false
-            }
-            if (id === newItem.id && newItem.checked === true) {
-              allPrice = allPrice - newItem.integral_total
-            }
-          })
-          self.setState({
-            items: newItems,
-            allIntegral: allPrice,
-            selectAll: all
           })
         }
       })
@@ -286,7 +292,7 @@ export default React.createClass({
         <Top title="购物车" />
         <div className={noCart + ' ' + 'no-cart'}>
           <div className="cart-img">
-            <img src="/src/assets/cart.png" />
+            <img src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/noCart-e876440bce.png" />
           </div>
           <p>购物车还是空的</p>
         </div>

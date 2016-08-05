@@ -18,7 +18,7 @@ const Menu = React.createClass({
     return (
       <div className="find-menu">
         <Link to={{ pathname: '/findDetail', query: { id: this.props.item.id } }}>
-          <img src={this.props.item.src} alt="this.props.item.id"></img>
+          <img src={this.props.item.img} alt="this.props.item.id"></img>
         </Link>
       </div>
     )

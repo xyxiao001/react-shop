@@ -32,6 +32,9 @@ const Item = React.createClass({
 })
 
 export default React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object
+  },
   getInitialState() {
     return {
       showAddress: false,
@@ -47,12 +50,24 @@ export default React.createClass({
     // 订单预览参数
     var or = JSON.parse(getOrder('order'))
     PostData('m=Order&a=preview', {data: {items: or}}, (data) => {
-      self.setState({
-        addressInfo: data.data.address_info,
-        items: data.data.item_list,
-        total: data.data.total_price,
-        finish: data.data.stock_status
-      })
+      if (data.code === 1) {
+        self.setState({
+          addressInfo: data.data.address_info,
+          items: data.data.item_list,
+          total: data.data.total_price,
+          finish: data.data.stock_status
+        })
+      } else {
+        var modal = Modal.error({
+          title: '抱歉，订单错误！'
+        })
+        setTimeout(() => {
+          modal.destroy()
+          self.context.router.push({
+            pathname: '/'
+          })
+        }, 2000)
+      }
     })
   },
   render() {
