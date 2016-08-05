@@ -167,4 +167,24 @@ div.addressChoose {
   div.ant-modal-footer {
     display: none;
   }
+
+  div.address-change {
+    width: 100%;
+
+    label {
+      width: 100%;
+      font-size: 14px;
+
+      input {
+        margin-top: 5px;
+        font-size: 15px;
+        height: 30px;
+      }
+
+      textarea {
+        margin-top: 5px;
+        font-size: 14px;
+      }
+    }
+  }
 }

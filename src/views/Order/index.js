@@ -1,16 +1,20 @@
 import React from 'react'
-import { Icon, Button, Modal, Radio } from 'antd'
+import { Icon, Button, Modal, Input } from 'antd'
+import $ from 'jquery'
 
 import Top from 'components/Top'
 import './index.scss'
-
-const RadioGroup = Radio.Group
 
 export default React.createClass({
   getInitialState() {
     return {
       showAddress: false,
-      adress: 1
+      adress: 1,
+      addressInfo: {
+        name: '露露西',
+        phone: '15549402630',
+        address: '浙江省杭州市下城区环城北路137号'
+      }
     }
   },
   render() {
@@ -35,9 +39,15 @@ export default React.createClass({
       })
     }
 
-    function onChangeAddress(e) {
+    function changeAddress() {
+      var info = {
+        name: $('input[name="people"]').val(),
+        phone: $('input[name="phone"]').val(),
+        address: $('textarea[name="address"]').val()
+      }
       self.setState({
-        adress: e.target.value
+        addressInfo: info,
+        showAddress: false
       })
     }
 
@@ -51,11 +61,11 @@ export default React.createClass({
               <div className="left">
                 <p className="consignee">
                   <Icon type="environment-o" />
-                  <span>收货人: 露露西</span>
-                  <span className="phone">电话: 15549402630</span>
+                  <span>收货人: {this.state.addressInfo.name}</span>
+                  <span className="phone">电话: {this.state.addressInfo.phone}</span>
                 </p>
                 <p className="receipt-address">
-                  <span>收货地址: 浙江省杭州市下城区环城北路137号</span>
+                  <span>收货地址: {this.state.addressInfo.address}</span>
                 </p>
               </div>
               <div className="right">
@@ -114,14 +124,23 @@ export default React.createClass({
             visible={this.state.showAddress}
             onCancel={handleCancel}
             style={{top: 150}}
-            title="地址选择">
-            <div className="address-select">
-              <RadioGroup onChange={onChangeAddress} value={this.state.adress}>
-                <Radio key="a" value={1}>A</Radio>
-                <Radio key="b" value={2}>B</Radio>
-                <Radio key="c" value={3}>C</Radio>
-                <Radio key="d" value={4}>D</Radio>
-              </RadioGroup>
+            title="地址修改">
+            <div className="address-change">
+              <from>
+                <label>
+                  <span>收货人</span>
+                  <Input type="text" name="people" defaultValue={this.state.addressInfo.name} />
+                </label>
+                <label>
+                  <span>联系电话</span>
+                  <Input type="text" name="phone" defaultValue={this.state.addressInfo.phone} />
+                </label>
+                <label>
+                  <span>收货地址</span>
+                  <Input type="textarea" name="address" rows={3} defaultValue={this.state.addressInfo.address} />
+                </label>
+                <Button type="primary" onClick={changeAddress}>保存</Button>
+              </from>
             </div>
           </Modal>
         </div>
