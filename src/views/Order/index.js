@@ -19,7 +19,7 @@ const Item = React.createClass({
         </div>
         <div className="item-right">
           <div className="r1">
-            <p>{this.props.item.title}</p>
+            <p>{this.props.item.title}<span className="error">{this.props.item.stock_msg}</span></p>
           </div>
           <div className="r2">
             <p className="r2-num">x{this.props.item.buy_num}</p>
@@ -38,7 +38,8 @@ export default React.createClass({
       adress: 1,
       addressInfo: {},
       items: [],
-      total: 0
+      total: 0,
+      finish: false
     }
   },
   componentDidMount() {
@@ -46,11 +47,11 @@ export default React.createClass({
     // 订单预览参数
     var or = JSON.parse(getOrder('order'))
     PostData('m=Order&a=preview', {data: {items: or}}, (data) => {
-      console.log(data)
       self.setState({
         addressInfo: data.data.address_info,
         items: data.data.item_list,
-        total: data.data.total_price
+        total: data.data.total_price,
+        finish: data.data.stock_status
       })
     })
   },
@@ -86,6 +87,18 @@ export default React.createClass({
         addressInfo: info,
         showAddress: false
       })
+    }
+
+    // 提交订单
+    function submit() {
+      if (self.state.finish) {
+
+      } else {
+        var modal = Modal.error({
+          title: '抱歉，商品库存不足！'
+        })
+        setTimeout(() => modal.destroy(), 1000)
+      }
     }
 
     // 渲染商品列表
@@ -133,7 +146,7 @@ export default React.createClass({
               onBlur={blurMsg} />
           </div>
           <div className="subOrder">
-            <Button type="primary">提交订单</Button>
+            <Button type="primary" onClick={submit}>提交订单</Button>
           </div>
           <Modal
             ref="modal"

@@ -6,6 +6,7 @@ import { message } from 'antd'
 import Top from 'components/Top'
 import SlideWrap from 'components/SlideWrap'
 import { GetData, PostData } from '../ajax'
+import { setOrder } from '../saveOrder'
 
 import './index.scss'
 
@@ -13,12 +14,32 @@ export default React.createClass({
   propTypes: {
     location: React.PropTypes.object
   },
+  contextTypes: {
+    router: React.PropTypes.object
+  },
   getInitialState() {
     return {
       detail: {
-        item_img: []
+        item_img: [],
+        num: 1
       }
     }
+  },
+  createOrder() {
+    var self = this
+    // 存商品信息
+    var items = []
+    items.push(
+      {
+        item_id: self.state.detail.id,
+        num: self.state.num
+      }
+    )
+    setOrder(JSON.stringify(items))
+    // 跳转到订单预览页
+    self.context.router.push({
+      pathname: '/order'
+    })
   },
   componentDidMount() {
     const self = this
@@ -44,7 +65,7 @@ export default React.createClass({
             <p className="detail-name">{this.state.detail.title}</p>
             <p>
               <span className="integral">{this.state.detail.jf_price}积分</span>
-              <span className="pull-right">剩余: <span className="my-integral">586积分</span></span>
+              <span className="pull-right">剩余: <span className="my-integral">{this.state.detail.user_credit}积分</span></span>
             </p>
           </div>
           <div className="detail-info">
@@ -65,7 +86,7 @@ export default React.createClass({
         <Link to='/'><span className='back'>首页</span></Link>
         <div className="bottom">
           <a name={this.state.detail.id} onClick={addCarts}>加入购物车</a>
-          <a>立即兑换</a>
+          <a onClick={this.createOrder} >立即兑换</a>
         </div>
       </div>
     )

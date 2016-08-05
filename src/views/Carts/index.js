@@ -171,8 +171,7 @@ export default React.createClass({
             allIntegral: allPrice,
             selectAll: all
           })
-        },
-        onCancel() {}
+        }
       })
     }
 
@@ -263,10 +262,6 @@ export default React.createClass({
       } else if (self.state.allIntegral > self.state.myIntegral) {
         msg('积分还不够呢！ 去赚积分，或者刷新试试。', 1.5)
       } else {
-        // 跳转到订单预览页
-        self.context.router.push({
-          pathname: '/order'
-        })
         // 存商品信息
         var items = []
         self.state.items.forEach((item) => {
@@ -280,6 +275,10 @@ export default React.createClass({
           }
         })
         setOrder(JSON.stringify(items))
+        // 跳转到订单预览页
+        self.context.router.push({
+          pathname: '/order'
+        })
       }
     }
     return (
