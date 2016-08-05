@@ -3,7 +3,7 @@ import $ from 'jquery'
 // get
 export function GetData(url, callback) {
   $.ajax({
-    type: 'GET',
+    type: 'get',
     async: false,
     url: 'http://wxshop.xuanwolei.cn/index.php?' + url,
     dataType: 'jsonp',
@@ -19,7 +19,7 @@ export function GetData(url, callback) {
 // post
 export function PostData(url, data, callback) {
   $.ajax({
-    type: 'GET',
+    type: 'post',
     async: false,
     url: 'http://wxshop.xuanwolei.cn/index.php?' + url,
     data: data,

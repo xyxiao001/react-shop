@@ -7,6 +7,7 @@ import './index.scss'
 
 // 导入组件
 import Top from 'components/Top'
+import { GetData } from '../ajax'
 
 var AddressBox = React.createClass({
   propTypes: {
@@ -16,8 +17,8 @@ var AddressBox = React.createClass({
     return (
       <div className='addressBox'>
         <div className='addressMsg'>
-          <p><span style={{fontSize: '16px'}}>{this.props.item.name}</span><span>{this.props.item.tel}</span></p>
-          <p>{this.props.item.address}</p>
+          <p><span style={{fontSize: '16px'}}>{this.props.item.consignee}</span><span>{this.props.item.mobile}</span></p>
+          <p>{this.props.item.sheng}</p>
         </div>
         <div className='addressEdit'>
           <p>
@@ -35,27 +36,16 @@ var AddressBox = React.createClass({
 export default React.createClass({
   getInitialState() {
     return {
-      addresses: [
-        {
-          id: 0,
-          name: '周杰伦',
-          tel: '166666666',
-          address: '北京市朝阳区99号'
-        },
-        {
-          id: 1,
-          name: '李连杰',
-          tel: '166666667',
-          address: '北京市朝阳区199号'
-        },
-        {
-          id: 2,
-          name: '周润发',
-          tel: '166666668',
-          address: '北京市朝阳区299号'
-        }
-      ]
+      addresses: []
     }
+  },
+  componentDidMount() {
+    var self = this
+    GetData('m=Order&a=addressList', (reponse) => {
+      self.setState({
+        addresses: reponse.data
+      })
+    })
   },
   render() {
     var addresses = []

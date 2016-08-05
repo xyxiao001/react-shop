@@ -1,5 +1,6 @@
 import React from 'react'
-import { Icon, Button, Modal, Input } from 'antd'
+import { Link } from 'react-router'
+import { Icon, Button, Modal, Input, message } from 'antd'
 import $ from 'jquery'
 import { PostData } from '../ajax'
 import { getOrder } from '../saveOrder'
@@ -39,7 +40,11 @@ export default React.createClass({
     return {
       showAddress: false,
       adress: 1,
-      addressInfo: {},
+      addressInfo: {
+        consignee: '袁宝成',
+        mobile: 15549402630,
+        address: '地球'
+      },
       items: [],
       total: 0,
       finish: false
@@ -52,7 +57,7 @@ export default React.createClass({
     PostData('m=Order&a=preview', {data: {items: or}}, (data) => {
       if (data.code === 1) {
         self.setState({
-          addressInfo: data.data.address_info,
+          // addressInfo: data.data.address_info,
           items: data.data.item_list,
           total: data.data.total_price,
           finish: data.data.stock_status
@@ -107,7 +112,33 @@ export default React.createClass({
     // 提交订单
     function submit() {
       if (self.state.finish) {
-
+        var items = []
+        self.state.items.forEach((item) => {
+          items.push(
+            {
+              item_id: item.id,
+              item_num: item.buy_num,
+              item_price: item.jf_price
+            }
+          )
+        })
+        var info = {
+          item_list: items,
+          order_total: self.state.total,
+          address_id: 1,
+          note: self.refs.note.value
+        }
+        PostData('m=Order&a=pay', info, function (data) {
+          if (data.code === 1) {
+            message.success('提交成功！')
+            setTimeout(function () {
+              self.context.router.push({pathname: '/integral'})
+            }, 500)
+          } else {
+            message.error('提交订单失败 ' + data.msg)
+            // self.context.router.push({pathname: '/'})
+          }
+        })
       } else {
         var modal = Modal.error({
           title: '抱歉，商品库存不足！'
@@ -155,11 +186,13 @@ export default React.createClass({
           <div className="msg" ref="msg">
             <div className="left">买家留言:</div>
             <textarea
+              ref="note"
               placeholder="点击给买家留言"
               className="right"
               onFocus={focusMsg}
               onBlur={blurMsg} />
           </div>
+          <Link to='/carts'><span className='back'>购物车</span></Link>
           <div className="subOrder">
             <Button type="primary" onClick={submit}>提交订单</Button>
           </div>

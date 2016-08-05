@@ -6,23 +6,31 @@ import './index.scss'
 // 导入组件
 import Navbar from 'components/Navbar'
 import Top from 'components/Top'
+import { GetData } from '../ajax'
 
 // 用户信息
 const User = React.createClass({
   getInitialState() {
     return {
-      username: '小明',
-      address: '北京市朝阳区188号',
-      integral: '998'
+      user_info: []
     }
+  },
+  componentDidMount() {
+    var self = this
+    GetData('m=Index&a=info', (reponse) => {
+      self.setState({
+        user_info: reponse.user_info
+      })
+    })
   },
   render() {
     return (
       <div className="user">
-        <p className="user-name"><span>{this.state.username}</span><a>赚积分</a></p>
+        <p className="user-name"><span>{this.state.user_info.nickname}</span><a>赚积分</a></p>
         <p>
-          <span className="userAddress">{this.state.address}</span>
-          <span className="integral-right pull-right">当前积分: <span className="my-integral">{this.state.integral}</span></span>
+          <span className="userAddress">{this.state.user_info.area}</span>
+          {/* <Link to='/address' className="managerAddress">管理收货地址</Link> */}
+          <span className="integral-right pull-right">当前积分: <span className="my-integral">{this.state.user_info.groupid}</span></span>
         </p>
       </div>
     )
@@ -36,7 +44,7 @@ const Integral = React.createClass({
   render() {
     return (
       <div className='integralBox'>
-        <p><span>{this.props.item.category}</span><span className='integralPlus'>{this.props.item.integralPlus}</span><span>{this.props.item.time}</span></p>
+        <p><span>{this.props.item.name}</span><span className='integralPlus'>{this.props.item.value}</span><span>{this.props.item.update}</span></p>
       </div>
     )
   }
@@ -45,26 +53,16 @@ const Integral = React.createClass({
 export default React.createClass({
   getInitialState() {
     return {
-      integralLogs: [
-        {
-          id: 1,
-          category: '会员-生日礼包',
-          integralPlus: '+20',
-          time: '2016-8-8'
-        },
-        {
-          id: 2,
-          category: '重庆鸡公煲1人餐',
-          integralPlus: '+38',
-          time: '2016-9-9'
-        },
-        { id: 3,
-          category: '黄焖鸡米饭2人餐',
-          integralPlus: '+32',
-          time: '2016-10-10'
-        }
-      ]
+      integralLogs: []
     }
+  },
+  componentDidMount() {
+    var self = this
+    GetData('m=User&a=pointsList', (reponse) => {
+      self.setState({
+        integralLogs: reponse.data.list
+      })
+    })
   },
   render() {
     let integralLogs = []

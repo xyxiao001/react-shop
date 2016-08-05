@@ -1,5 +1,5 @@
 import React from 'react'
-import { Checkbox } from 'antd'
+import { Checkbox, Button } from 'antd'
 
 // 导入样式
 import './index.scss'
@@ -22,7 +22,9 @@ export default React.createClass({
         <div className='defaultAd'>
           <p><span>设为默认地址</span><Checkbox>Checkbox</Checkbox></p>
         </div>
-
+        <div className='addressBtn'>
+          <Button className='btn btn-block addressBtn'>保存</Button>
+        </div>
       </div>
     )
   }

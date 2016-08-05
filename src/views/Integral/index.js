@@ -6,24 +6,21 @@ import './index.scss'
 // 导入组件
 import Navbar from 'components/Navbar'
 import Top from 'components/Top'
+import { GetData } from '../ajax'
 
 // 用户信息
 const User = React.createClass({
-  getInitialState() {
-    return {
-      username: '小明',
-      address: '北京市朝阳区188号',
-      integral: '998'
-    }
+  propTypes: {
+    info: React.PropTypes.object
   },
   render() {
     return (
       <div className="user">
-        <p className="user-name"><span>{this.state.username}</span><a>赚积分</a></p>
+        <p className="user-name"><span>{this.props.info.nickname}</span><a>赚积分</a></p>
         <p>
-          <span className="userAddress">{this.state.address}</span>
-          <Link to='/address' className="managerAddress">管理收货地址</Link>
-          <span className="integral-right pull-right">当前积分: <span className="my-integral">{this.state.integral}</span></span>
+          <span className="userAddress">{this.props.info.area}</span>
+          {/* <Link to='/address' className="managerAddress">管理收货地址</Link> */}
+          <span className="integral-right pull-right">当前积分: <span className="my-integral">{this.props.info.groupid}</span></span>
         </p>
       </div>
     )
@@ -39,8 +36,8 @@ const Conversion = React.createClass({
     return (
       <Link to={{ pathname: '/shopDetail', query: { id: this.props.item.id } }}>
         <div className="conversionBox">
-          <p>单号：<span>{this.props.item.addNum}</span></p>
-          <p>商品：<span>{this.props.item.commodity}</span><span className='send fr'>{this.props.item.shipments}</span></p>
+          <p>单号：<span>{this.props.item.orderId}</span></p>
+          <p>商品：<span>{this.props.item.title}</span><span className='send fr'>{this.props.item.status_msg}</span></p>
         </div>
       </Link>
     )
@@ -50,27 +47,22 @@ const Conversion = React.createClass({
 export default React.createClass({
   getInitialState() {
     return {
-      shops: [
-        {
-          id: 0,
-          addNum: '123456789',
-          commodity: '冰激凌',
-          shipments: '待发货'
-        },
-        {
-          id: 1,
-          addNum: '123456789',
-          commodity: '冰激凌2',
-          shipments: '已发货'
-        },
-        {
-          id: 2,
-          addNum: '123456789',
-          commodity: '冰激凌2',
-          shipments: '已发货'
-        }
-      ]
+      user_info: {},
+      shops: []
     }
+  },
+  componentDidMount() {
+    const self = this
+    GetData('m=User&a=myOrder', (reponse) => {
+      self.setState({
+        shops: reponse.data.list
+      })
+    })
+    GetData('m=Index&a=info', (reponse) => {
+      self.setState({
+        user_info: reponse.user_info
+      })
+    })
   },
   render() {
     var shops = []
@@ -82,7 +74,7 @@ export default React.createClass({
     return (
       <div className="wrap">
         <Top title="我的积分" />
-        <User />
+        <User info={this.state.user_info} />
         <div className='nav'>
           <Link to='/integral' className='conversion'>兑换记录</Link>
           <Link to='/integralLog' className='integral'>积分记录</Link>
