@@ -36,6 +36,9 @@ export default React.createClass({
   contextTypes: {
     router: React.PropTypes.object
   },
+  propTypes: {
+    location: React.PropTypes.object
+  },
   getInitialState() {
     return {
       showAddress: false,
@@ -47,11 +50,17 @@ export default React.createClass({
       },
       items: [],
       total: 0,
-      finish: false
+      finish: false,
+      isCart: 0
     }
   },
   componentDidMount() {
     const self = this
+    if (self.props.location.query.iscart === 1) {
+      self.setState({
+        isCart: 1
+      })
+    }
     // 订单预览参数
     var or = JSON.parse(getOrder('order'))
     PostData('m=Order&a=preview', {data: {items: or}}, (data) => {
@@ -126,6 +135,7 @@ export default React.createClass({
           item_list: items,
           order_total: self.state.total,
           address_id: 1,
+          is_cart: self.state.isCart,
           note: self.refs.note.value
         }
         PostData('m=Order&a=pay', info, function (data) {

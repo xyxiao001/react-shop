@@ -151,3 +151,19 @@ div.detail-menu {
 .back {
   background-color: rgba(255, 255, 255, 0.3);
 }
+
+.vertical-center-modal {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.vertical-center-modal .ant-modal {
+  top: 0;
+}
+
+.show-num {
+  width: 50%;
+  margin: auto;
+}

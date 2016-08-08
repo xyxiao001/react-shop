@@ -27,7 +27,7 @@ render((
     <Route path='/Detail' component={Detail} />
     <Route path='/FindDetail' component={FindDetail} />
     <Route path='/ShopDetail' component={ShopDetail} />
-    <Route path='/Order' component={Order} />
+    <Route path='/Order*' component={Order} />
     <Route path='/Address' component={Address} />
     <Route path='/AddressEdit' component={AddressEdit} />
     <Route path='*' component={Home} />

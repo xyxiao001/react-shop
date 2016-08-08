@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import { message } from 'antd'
+import { message, Modal, Icon } from 'antd'
 
 // 导入组件
 import Top from 'components/Top'
@@ -20,9 +20,11 @@ export default React.createClass({
   getInitialState() {
     return {
       detail: {
-        item_img: [],
-        num: 1
-      }
+        item_img: []
+      },
+      id: 1,
+      num: 1,
+      showCart: false
     }
   },
   createOrder() {
@@ -50,15 +52,26 @@ export default React.createClass({
     })
   },
   render() {
-    function addCarts(e) {
-      var id = e.target.name
-      PostData('m=Cart&a=add', {data: {item_id: id, buy_num: 1}}, function (data) {
+    const self = this
+    function showCarts(e) {
+      self.setState({
+        showCart: true,
+        id: e.target.name
+      })
+    }
+    function subCarts(e) {
+      PostData('m=Cart&a=add', {data: {item_id: self.state.id, buy_num: self.state.num}}, function (data) {
         if (data.code === 1) {
           message.success('添加成功!', 0.75)
         } else {
           message.error('添加失败!' + data.msg, 0.75)
           console.log(data)
         }
+      })
+    }
+    function closeShowCart() {
+      self.setState({
+        showCart: false
       })
     }
     return (
@@ -90,9 +103,29 @@ export default React.createClass({
         </div>
         <Link to='/carts'><span className='back'>购物车</span></Link>
         <div className="bottom">
-          <a name={this.state.detail.id} onClick={addCarts}>加入购物车</a>
+          <a name={this.state.detail.id} onClick={showCarts}>加入购物车</a>
           <a onClick={this.createOrder} >立即兑换</a>
         </div>
+        <Modal
+          title="选择数量规格"
+          wrapClassName="vertical-center-modal"
+          visible={this.state.showCart}
+          onOk={subCarts}
+          onCancel={closeShowCart}>
+          <div className="show-num">
+            <div className="num-select">
+              <div className="num-reduce">
+                <Icon type="minus" />
+              </div>
+              <div className="num-show">
+                <input type="number" value={this.state.detail.num} />
+              </div>
+              <div className="num-add">
+                <Icon type="plus" />
+              </div>
+            </div>
+          </div>
+        </Modal>
       </div>
     )
   }

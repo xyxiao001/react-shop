@@ -283,7 +283,7 @@ export default React.createClass({
         setOrder(JSON.stringify(items))
         // 跳转到订单预览页
         self.context.router.push({
-          pathname: '/order'
+          pathname: '/order?iscart=1'
         })
       }
     }
