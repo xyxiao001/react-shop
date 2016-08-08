@@ -80,7 +80,8 @@ export default React.createClass({
     const self = this
     GetData('m=Cart&a=lists', function (data) {
       self.setState({
-        items: data.items
+        items: data.items,
+        myIntegral: data.user_credit
       })
     })
   },

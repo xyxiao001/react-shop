@@ -44,9 +44,9 @@ export default React.createClass({
       showAddress: false,
       adress: 1,
       addressInfo: {
-        consignee: '袁宝成',
-        mobile: 15549402630,
-        address: '地球'
+        consignee: '',
+        mobile: '',
+        address: ''
       },
       items: [],
       total: 0,
@@ -66,7 +66,7 @@ export default React.createClass({
     PostData('m=Order&a=preview', {data: {items: or}}, (data) => {
       if (data.code === 1) {
         self.setState({
-          // addressInfo: data.data.address_info,
+          addressInfo: data.data.address_info,
           items: data.data.item_list,
           total: data.data.total_price,
           finish: data.data.stock_status
@@ -164,11 +164,13 @@ export default React.createClass({
         <Item key={index} item={item} />
       )
     })
+    var hasAddress = this.state.addressInfo.length === 0 ? 'hide' : 'show'
+    var newAddress = this.state.addressInfo.length === 0 ? 'show' : 'hide'
     return (
       <div className="wrap">
         <Top title='待确认订单' />
         <div className="order">
-          <div className="address" onClick={chooseAddress}>
+          <div className={hasAddress + ' ' + 'address'} onClick={chooseAddress}>
             <div className="address-bg" />
             <div className="adress-item">
               <div className="left">
@@ -185,6 +187,9 @@ export default React.createClass({
                 <Icon type="right" />
               </div>
             </div>
+          </div>
+          <div className={newAddress + ' ' + 'address'} onClick={chooseAddress}>
+            <Button>点击新增收货地址</Button>
           </div>
           <div className="title">订单商品列表</div>
           <div className="item-list">
