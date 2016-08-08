@@ -1,5 +1,6 @@
 import React from 'react'
 import { message } from 'antd'
+import $ from 'jquery'
 
 // 导入组件
 import Navbar from 'components/Navbar'
@@ -20,12 +21,15 @@ export default React.createClass({
   getInitialState() {
     return {
       name: '',
-      items: []
+      items: [],
+      page: 1,
+      hasChild: 0
     }
   },
   componentDidMount() {
     const self = this
-    GetData('m=Find&a=itemList' + '&id=' + this.props.location.query.id, function (data) {
+    var id = this.props.location.query.id
+    GetData('m=Find&a=itemList' + '&id=' + id + '&page=' + self.state.page, function (data) {
       if (data.code === 1 && data.hots !== null) {
         self.setState({
           items: data.hots,
@@ -38,6 +42,29 @@ export default React.createClass({
             pathname: '/find'
           })
         }, 1500)
+      }
+    })
+    // 滚动加载
+    var loading = false
+    $(document).scroll(function () {
+      // 记录滚动的高度
+      var top = $(window).scrollTop()
+      // 当前页面高度
+      var doc = $(document).height()
+      // 当屏幕高度
+      var screen = $(window).height()
+      // 当滑动到 页面80%时 开始加载数据
+      if (top + screen >= doc * 0.8 && loading === false && self.state.hasChild !== 0) {
+        self.setState({
+          page: self.state.page + 1
+        })
+        GetData('m=Find&a=itemList' + '&id=' + id + '&page=' + self.state.page, function (data) {
+          self.setState({
+            items: data.hots,
+            name: data.title
+          })
+          loading = true
+        })
       }
     })
   },
