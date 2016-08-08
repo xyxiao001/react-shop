@@ -14,6 +14,9 @@ export default React.createClass({
   propTypes: {
     location: React.PropTypes.object
   },
+  contextTypes: {
+    router: React.PropTypes.object
+  },
   getInitialState() {
     return {
       name: '',
@@ -23,14 +26,18 @@ export default React.createClass({
   componentDidMount() {
     const self = this
     GetData('m=Find&a=itemList' + '&id=' + this.props.location.query.id, function (data) {
-      console.log(data)
       if (data.code === 1 && data.hots !== null) {
         self.setState({
           items: data.hots,
           name: data.title
         })
       } else {
-        message.error('暂无数据！' + data.msg)
+        message.error('暂无数据！请稍后再试。')
+        setTimeout(() => {
+          self.context.router.push({
+            pathname: '/find'
+          })
+        }, 1500)
       }
     })
   },
