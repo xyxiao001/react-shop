@@ -42,7 +42,7 @@ export default React.createClass({
   getInitialState() {
     return {
       showAddress: false,
-      adress: 1,
+      adressId: 0,
       addressInfo: {
         consignee: '',
         mobile: '',
@@ -69,7 +69,8 @@ export default React.createClass({
           addressInfo: data.data.address_info,
           items: data.data.item_list,
           total: data.data.total_price,
-          finish: data.data.stock_status
+          finish: data.data.stock_status,
+          addressId: data.data.addressId
         })
       } else {
         var modal = Modal.error({
@@ -112,10 +113,23 @@ export default React.createClass({
         mobile: $('input[name="phone"]').val(),
         address: $('textarea[name="address"]').val()
       }
-      self.setState({
-        addressInfo: info,
-        showAddress: false
-      })
+      PostData('m=Order&a=editAddress', {
+        data: {
+          id: self.state.adressId,
+          consignee: info.consignee,
+          mobile: info.mobile,
+          address: info.address
+        }}, function (data) {
+          if (data.code !== 1) {
+            message.error(data.msg, 0.5)
+          } else {
+            self.setState({
+              addressId: data.id,
+              addressInfo: info,
+              showAddress: false
+            })
+          }
+        })
     }
 
     // 提交订单
@@ -134,7 +148,7 @@ export default React.createClass({
         var info = {
           item_list: items,
           order_total: self.state.total,
-          address_id: 1,
+          address_id: self.addressId,
           is_cart: self.state.isCart,
           note: self.refs.note.value
         }
