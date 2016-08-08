@@ -24,7 +24,8 @@ export default React.createClass({
       },
       id: 1,
       num: 1,
-      showCart: false
+      showCart: false,
+      shwoGo: false
     }
   },
   componentDidMount() {
@@ -41,6 +42,11 @@ export default React.createClass({
       self.setState({
         showCart: true,
         id: e.target.name
+      })
+    }
+    function showGo(e) {
+      self.setState({
+        showGo: true
       })
     }
     function subCarts(e) {
@@ -72,7 +78,8 @@ export default React.createClass({
     }
     function closeShowCart() {
       self.setState({
-        showCart: false
+        showCart: false,
+        showGo: false
       })
     }
     function addNum() {
@@ -122,7 +129,7 @@ export default React.createClass({
         <Link to='/carts'><span className='back'>购物车</span></Link>
         <div className="bottom">
           <a name={this.state.detail.id} onClick={showCarts}>加入购物车</a>
-          <a onClick={showCarts} >立即兑换</a>
+          <a onClick={showGo} >立即兑换</a>
         </div>
         <Modal
           title="选择数量规格"
@@ -147,7 +154,7 @@ export default React.createClass({
         <Modal
           title="选择数量规格"
           wrapClassName="vertical-center-modal"
-          visible={this.state.showCart}
+          visible={this.state.showGo}
           onOk={createOrder}
           onCancel={closeShowCart}>
           <div className="show-num">
