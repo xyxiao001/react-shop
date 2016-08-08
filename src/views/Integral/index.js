@@ -1,45 +1,19 @@
 import React from 'react'
-import { Link } from 'react-router'
 // 导入css
 import './index.scss'
 
 // 导入组件
-import Navbar from 'components/Navbar'
-import Top from 'components/Top'
 import { GetData } from '../ajax'
 
-// 用户信息
-const User = React.createClass({
-  propTypes: {
-    info: React.PropTypes.object
-  },
-  render() {
-    return (
-      <div className="user">
-        <p className="user-name"><span>{this.props.info.nickname}</span><a>赚积分</a></p>
-        <p>
-          <span className="userAddress">{this.props.info.area}</span>
-          {/* <Link to='/address' className="managerAddress">管理收货地址</Link> */}
-          <span className="integral-right pull-right">当前积分: <span className="my-integral">{this.props.info.groupid}</span></span>
-        </p>
-      </div>
-    )
-  }
-})
-
-// 兑换详情
-const Conversion = React.createClass({
+const Integral = React.createClass({
   propTypes: {
     item: React.PropTypes.object
   },
   render() {
     return (
-      <Link to={{ pathname: '/shopDetail', query: { id: this.props.item.id } }}>
-        <div className="conversionBox">
-          <p>单号：<span>{this.props.item.orderId}</span></p>
-          <p>商品：<span>{this.props.item.title}</span><span className='send fr'>{this.props.item.status_msg}</span></p>
-        </div>
-      </Link>
+      <div className='integralBox'>
+        <p><span>{this.props.item.name}</span><span className='integralPlus'>{this.props.item.value}</span><span>{this.props.item.update}</span></p>
+      </div>
     )
   }
 })
@@ -47,42 +21,27 @@ const Conversion = React.createClass({
 export default React.createClass({
   getInitialState() {
     return {
-      user_info: {},
-      shops: []
+      integralLogs: []
     }
   },
   componentDidMount() {
-    const self = this
-    GetData('m=User&a=myOrder', (reponse) => {
+    var self = this
+    GetData('m=User&a=pointsList', (data) => {
       self.setState({
-        shops: reponse.data.list
-      })
-    })
-    GetData('m=Index&a=info', (reponse) => {
-      self.setState({
-        user_info: reponse.user_info
+        integralLogs: data.data.list
       })
     })
   },
   render() {
-    var shops = []
-    this.state.shops.forEach((shop) => {
-      shops.push(
-        <Conversion item={shop} key={shop.id} />
+    let integralLogs = []
+    this.state.integralLogs.forEach((integralLog, index) => {
+      integralLogs.push(
+        <Integral item={integralLog} key={index} />
       )
     })
     return (
-      <div className="wrap">
-        <Top title="我的积分" />
-        <User info={this.state.user_info} />
-        <div className='nav'>
-          <Link to='/integral' className='conversion'>兑换记录</Link>
-          <Link to='/integralLog' className='integral'>积分记录</Link>
-        </div>
-        <div>
-          {shops}
-        </div>
-        <Navbar />
+      <div>
+        {integralLogs}
       </div>
     )
   }
