@@ -132,7 +132,7 @@ export default React.createClass({
           if (data.code === 1) {
             message.success('提交成功！')
             setTimeout(function () {
-              self.context.router.push({pathname: '/integral'})
+              self.context.router.push({pathname: '/inte/exchange'})
             }, 500)
           } else {
             message.error('提交订单失败 ' + data.msg)

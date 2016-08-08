@@ -38,11 +38,13 @@ export default React.createClass({
   },
   componentDidMount() {
     const self = this
-    GetData('m=Index&a=info', (data) => {
-      self.setState({
-        user_info: data.user_info
+    setTimeout(function () {
+      GetData('m=Index&a=info', (data) => {
+        self.setState({
+          user_info: data.user_info
+        })
       })
-    })
+    }, 500)
   },
   render() {
     return (
