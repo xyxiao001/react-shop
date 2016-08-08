@@ -73,7 +73,7 @@ export default React.createClass({
       items: [],
       selectAll: false,
       allIntegral: 0,
-      myIntegral: 500
+      myIntegral: 1000
     }
   },
   componentDidMount() {
