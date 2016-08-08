@@ -1,84 +1,95 @@
 import React from 'react'
 import { Link } from 'react-router'
-
+// 导入样式
+import './index.scss'
 // 导入组件
 import Top from 'components/Top'
-
-import './index.scss'
-
+import { GetData } from '../ajax'
 // 订单信息
 const Detail = React.createClass({
-  getInitialState() {
-    return {
-      num: '121565466',
-      integral: '889',
-      time: '2016.6.25 18:35',
-      isSend: '已发货'
-    }
+  propTypes: {
+    order: React.PropTypes.object
   },
   render() {
     return (
       <div className='detail'>
-        <p>订单编号： <span>{this.state.num}</span></p>
-        <p>消耗积分： <span>{this.state.integral}</span></p>
-        <p>下单时间 <span>{this.state.time}</span><span className='send fr'>{this.state.isSend}</span></p>
+        <p>订单编号： <span>{this.props.order.orderId}</span></p>
+        <p>消耗积分： <span>{this.props.order.goods_sumJfPrice}</span></p>
+        <p>下单时间： <span>{this.props.order.add_time}</span><span className='send fr'>{this.props.order.status_msg}</span></p>
       </div>
     )
   }
 })
 // 商品信息
 const Commodity = React.createClass({
-  getInitialState() {
-    return {
-      commodityNum: 1,
-      src: 'src/assets/commodity1.png'
-    }
+  propTypes: {
+    item: React.PropTypes.object
   },
   render() {
     return (
       <div className='commodity'>
-        <img src={this.state.src} />
+        <img src={this.props.item.img} />
         <div className='title'>
-          <p className='num'>防水手表</p>
-          <p>数量：<span>1</span></p>
+          <p className='num'>{this.props.item.title}</p>
+          <p>数量：<span>{this.props.item.quantity}</span></p>
         </div>
       </div>
     )
   }
 })
-
 const User = React.createClass({
-  getInitialState() {
-    return {
-      name: '小明',
-      tel: '16666666666',
-      address: '北京市朝阳区188号'
-    }
+  propTypes: {
+    delivery: React.PropTypes.object
   },
   render() {
     return (
       <div className='userBox'>
-        <img src={this.state.src} />
         <div className='usermsg'>
-          <p>收货人： <span>{this.state.name}</span></p>
-          <p>联系方式： <span>{this.state.tel}</span></p>
-          <p>地址： <span>{this.state.address}</span></p>
+          <p>收货人： <span>{this.props.delivery.address_name}</span></p>
+          <p>联系方式： <span>{this.props.delivery.mobile}</span></p>
+          <p>地址： <span>{this.props.delivery.address}</span></p>
         </div>
       </div>
     )
   }
 })
-
 export default React.createClass({
+  propTypes: {
+    location: React.PropTypes.object
+  },
+  getInitialState() {
+    return {
+      shopData: {
+        order_info: {},
+        item_list: [],
+        delivery_info: {}
+      }
+    }
+  },
+  componentDidMount() {
+    var self = this
+    GetData('m=User&a=orderDetail&id=' + this.props.location.query.id, (reponse) => {
+      self.setState({
+        shopData: reponse.data
+      })
+    })
+  },
   render() {
+    var items = []
+    this.state.shopData.item_list.forEach((it) => {
+      items.push(
+        <Commodity item={it} key={this.props.location.query.id} />
+      )
+    })
     return (
       <div className="wrap">
         <Top title="订单详情页" />
-        <Detail />
-        <Commodity />
-        <p className='apply'><span className='fl'>支付方式</span><span className='online fr'>在线支付</span></p>
-        <User />
-        <Link to='/integral'><span className='back'>返回</span></Link>
+        <Detail order={this.state.shopData.order_info} />
+        <div>
+          {items}
+        </div>
+        <p className='apply'><span className='fl'>支付方式</span><span className='online fr'>{this.state.shopData.pay_type}</span></p>
+        <User delivery={this.state.shopData.delivery_info} />
         <div className="bottom">
           <Link to="/">申请退货</Link>
           <Link to="/">联系客服</Link>

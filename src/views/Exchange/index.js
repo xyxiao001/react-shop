@@ -16,6 +16,7 @@ const Conversion = React.createClass({
       <Link to={{ pathname: '/shopDetail', query: { id: this.props.item.id } }}>
         <div className="conversionBox">
           <p>单号：<span>{this.props.item.orderId}</span></p>
+          <p>兑换时间：<span>{this.props.item.add_time}</span></p>
           <p>商品：<span>{this.props.item.title}</span><span className='send fr'>{this.props.item.status_msg}</span></p>
         </div>
       </Link>

@@ -19,19 +19,22 @@
   background: #fff;
   position: relative;
   img{
+    height: 100px;
+    width: 100px;
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 0;
+    left: 0;
   }
   .title{
     position: absolute;
     top: 18px;
-    left: 100px;
+    left: 110px;
     color: #000;
     font-weight: bold;
     font-size: 13px;
     .num{
       margin-bottom: 30px;
+      margin-left: -6px;
     }
   }
 }
@@ -53,7 +56,6 @@
   background: #E6E6E6;
   height: 420px;
   .usermsg{
-    margin-top: -18px;
     padding: 10px 20px;
     height: 80px;
     background: #fff;

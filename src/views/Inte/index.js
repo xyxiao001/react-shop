@@ -11,7 +11,8 @@ import { GetData } from '../ajax'
 // 用户信息
 const User = React.createClass({
   propTypes: {
-    info: React.PropTypes.object
+    info: React.PropTypes.object,
+    user_credit: React.PropTypes.string
   },
   render() {
     return (
@@ -20,7 +21,7 @@ const User = React.createClass({
         <p>
           <span className="userAddress">{this.props.info.area}</span>
           {/* <Link to='/address' className="managerAddress">管理收货地址</Link> */}
-          <span className="integral-right pull-right">当前积分: <span className="my-integral">{this.props.info.groupid}</span></span>
+          <span className="integral-right pull-right">当前积分: <span className="my-integral">{this.props.user_credit}</span></span>
         </p>
       </div>
     )
@@ -33,6 +34,7 @@ export default React.createClass({
   },
   getInitialState() {
     return {
+      data: {},
       user_info: {}
     }
   },
@@ -41,6 +43,7 @@ export default React.createClass({
     setTimeout(function () {
       GetData('m=Index&a=info', (data) => {
         self.setState({
+          data: data,
           user_info: data.user_info
         })
       })
@@ -50,7 +53,7 @@ export default React.createClass({
     return (
       <div className="wrap">
         <Top title="我的积分" />
-        <User info={this.state.user_info} />
+        <User info={this.state.user_info} user_credit={this.state.data.user_credit} />
         <div className='nav'>
           <Link to='/inte/exchange' className='conversion'>兑换记录</Link>
           <Link to='/inte/integral' className='integral'>积分记录</Link>

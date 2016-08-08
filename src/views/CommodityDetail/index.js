@@ -27,22 +27,6 @@ export default React.createClass({
       showCart: false
     }
   },
-  createOrder() {
-    var self = this
-    // 存商品信息
-    var items = []
-    items.push(
-      {
-        item_id: self.state.detail.id,
-        num: 1
-      }
-    )
-    setOrder(JSON.stringify(items))
-    // 跳转到订单预览页
-    self.context.router.push({
-      pathname: '/order'
-    })
-  },
   componentDidMount() {
     const self = this
     GetData('m=Item&a=detail&id=' + this.props.location.query.id, function (data) {
@@ -69,6 +53,21 @@ export default React.createClass({
         } else {
           message.error('添加失败!' + data.msg, 0.75)
         }
+      })
+    }
+    function createOrder() {
+      // 存商品信息
+      var items = []
+      items.push(
+        {
+          item_id: self.state.detail.id,
+          num: self.state.num
+        }
+      )
+      setOrder(JSON.stringify(items))
+      // 跳转到订单预览页
+      self.context.router.push({
+        pathname: '/order'
       })
     }
     function closeShowCart() {
@@ -123,13 +122,33 @@ export default React.createClass({
         <Link to='/carts'><span className='back'>购物车</span></Link>
         <div className="bottom">
           <a name={this.state.detail.id} onClick={showCarts}>加入购物车</a>
-          <a onClick={this.createOrder} >立即兑换</a>
+          <a onClick={showCarts} >立即兑换</a>
         </div>
         <Modal
           title="选择数量规格"
           wrapClassName="vertical-center-modal"
           visible={this.state.showCart}
           onOk={subCarts}
+          onCancel={closeShowCart}>
+          <div className="show-num">
+            <div className="num-select">
+              <div className="num-reduce">
+                <Icon type="minus" onClick={minusNum} />
+              </div>
+              <div className="num-show">
+                <input type="number" value={this.state.num} onChange={changeNum} />
+              </div>
+              <div className="num-add">
+                <Icon type="plus" onClick={addNum} />
+              </div>
+            </div>
+          </div>
+        </Modal>
+        <Modal
+          title="选择数量规格"
+          wrapClassName="vertical-center-modal"
+          visible={this.state.showCart}
+          onOk={createOrder}
           onCancel={closeShowCart}>
           <div className="show-num">
             <div className="num-select">
