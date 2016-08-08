@@ -56,7 +56,7 @@ export default React.createClass({
   },
   componentDidMount() {
     const self = this
-    if (self.props.location.query.iscart === 1) {
+    if (self.props.location.query.iscart === '1') {
       self.setState({
         isCart: 1
       })

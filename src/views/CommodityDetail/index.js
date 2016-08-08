@@ -63,9 +63,11 @@ export default React.createClass({
       PostData('m=Cart&a=add', {data: {item_id: self.state.id, buy_num: self.state.num}}, function (data) {
         if (data.code === 1) {
           message.success('添加成功!', 0.75)
+          self.setState({
+            showCart: false
+          })
         } else {
           message.error('添加失败!' + data.msg, 0.75)
-          console.log(data)
         }
       })
     }
@@ -74,6 +76,23 @@ export default React.createClass({
         showCart: false
       })
     }
+    function addNum() {
+      var num = self.state.num + 1
+      self.setState({
+        num: num
+      })
+    }
+    function minusNum() {
+      var num = self.state.num - 1
+      if (num < 1) {
+        message.error('至少添加一件商品', 0.5)
+      } else {
+        self.setState({
+          num: num
+        })
+      }
+    }
+    function changeNum() {}
     return (
       <div className="wrap">
         <Top title="商品详情页" />
@@ -115,13 +134,13 @@ export default React.createClass({
           <div className="show-num">
             <div className="num-select">
               <div className="num-reduce">
-                <Icon type="minus" />
+                <Icon type="minus" onClick={minusNum} />
               </div>
               <div className="num-show">
-                <input type="number" value={this.state.detail.num} />
+                <input type="number" value={this.state.num} onChange={changeNum} />
               </div>
               <div className="num-add">
-                <Icon type="plus" />
+                <Icon type="plus" onClick={addNum} />
               </div>
             </div>
           </div>
