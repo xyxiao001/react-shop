@@ -213,10 +213,10 @@ export default React.createClass({
             <p>总计: <span>{this.state.total}积分</span></p>
           </div>
           <div className="msg" ref="msg">
-            <div className="left">买家留言:</div>
+            <div className="left">卖家留言:</div>
             <textarea
               ref="note"
-              placeholder="点击给买家留言"
+              placeholder="点击给卖家留言"
               className="right"
               onFocus={focusMsg}
               onBlur={blurMsg} />
