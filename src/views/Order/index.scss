@@ -89,9 +89,10 @@
     position: fixed;
     width: 100%;
     height: 35px;
-    bottom: 20px;
+    bottom: 10px;
     overflow: hidden;
     color: white;
+    z-index: 100;
 
     button {
       float: right;
@@ -167,7 +168,7 @@
   }
 
   .back {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 }
 
