@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router'
 import { message, Modal, Icon } from 'antd'
 
 // 导入组件
@@ -7,6 +6,7 @@ import Top from 'components/Top'
 import SlideWrap from 'components/SlideWrap'
 import { GetData, PostData } from '../ajax'
 import { setOrder } from '../saveOrder'
+import SmallCart from 'components/SmallCart'
 
 import './index.scss'
 
@@ -126,7 +126,7 @@ export default React.createClass({
             <div className="detail-content" dangerouslySetInnerHTML={{__html: this.state.detail.info}} />
           </div>
         </div>
-        <Link to='/carts'><span className='back'>购物车</span></Link>
+        <SmallCart />
         <div className="bottom">
           <a name={this.state.detail.id} onClick={showCarts}>加入购物车</a>
           <a onClick={showGo} >立即兑换</a>
