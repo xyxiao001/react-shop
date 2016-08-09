@@ -59,9 +59,9 @@ export default React.createClass({
           page: self.state.page + 1
         })
         GetData('m=Find&a=itemList' + '&id=' + id + '&page=' + self.state.page, function (data) {
+          var newItem = self.state.items.concat(data.hots)
           self.setState({
-            items: data.hots,
-            name: data.title
+            items: newItem
           })
           loading = true
         })
